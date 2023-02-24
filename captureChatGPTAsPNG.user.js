@@ -74,6 +74,7 @@ alert('This chat can be saved as a png');
     }, 100);
   });
 })();
+//I don't klnow why but the require tag isn't working, so load html2canvas manually
 function loadJS(FILE_URL, async = true) {
   let scriptEle = document.createElement("script");
 
