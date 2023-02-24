@@ -3,10 +3,12 @@
 // @namespace    http://tampermonkey.net/
 // @version      0.1
 // @description  try to take over the world!
-// @author       You
+// @author       fishdan
+// @homepage     fishdan.com
 // @match        https://chat.openai.com/*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=google.com
 // @grant        none
+// @license      bsd
 // ==/UserScript==
 // @require https://html2canvas.hertzen.com/dist/html2canvas.min.js
 
