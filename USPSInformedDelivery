@@ -3,7 +3,7 @@
 // @namespace   http://tampermonkey.net/
 // @version     1.0
 // @description Navigate between dates on USPS Informed Delivery
-// @author      You
+// @author      Dan fishdan.com
 // @match       https://informeddelivery.usps.com/box/pages/secure/DashboardAction_input.action*
 // @grant       GM_addStyle
 // ==/UserScript==
