@@ -1,0 +1,61 @@
+// ==UserScript==
+// @name        USPS Informed Delivery Navigation
+// @namespace   http://tampermonkey.net/
+// @version     1.0
+// @description Navigate between dates on USPS Informed Delivery
+// @author      You
+// @match       https://informeddelivery.usps.com/box/pages/secure/DashboardAction_input.action*
+// @grant       GM_addStyle
+// ==/UserScript==
+
+(function() {
+    'use strict';
+
+    // Add styles for button div
+    GM_addStyle('.showAddress button, .showAddress span { margin: 0 10px; }');
+
+    // Get current date from URL
+    let urlParams = new URLSearchParams(window.location.search);
+    let selectedDate = urlParams.get('selectedDate');
+    let selectedZip = urlParams.get('selectedZip11');
+    let currentDate = new Date(decodeURIComponent(selectedDate));
+    let oneDay = 24*60*60*1000;
+
+    // Create date strings
+    let yesterday = new Date(currentDate.getTime() - oneDay);
+    let tomorrow = new Date(currentDate.getTime() + oneDay);
+    let yesterdayString = `${yesterday.getMonth()+1}%2F${yesterday.getDate()}%2F${yesterday.getFullYear()}`;
+    let tomorrowString = `${tomorrow.getMonth()+1}%2F${tomorrow.getDate()}%2F${tomorrow.getFullYear()}`;
+
+    // Create human-readable date strings for button labels
+    let yesterdayLabel = `${('0' + (yesterday.getMonth()+1)).slice(-2)}/${('0' + yesterday.getDate()).slice(-2)}/${yesterday.getFullYear()}`;
+    let tomorrowLabel = `${('0' + (tomorrow.getMonth()+1)).slice(-2)}/${('0' + tomorrow.getDate()).slice(-2)}/${tomorrow.getFullYear()}`;
+
+    // Create URL strings
+    let yesterdayUrl = `https://informeddelivery.usps.com/box/pages/secure/DashboardAction_input.action?selectedDate=${yesterdayString}&selectedZip11=${selectedZip}`;
+    let tomorrowUrl = `https://informeddelivery.usps.com/box/pages/secure/DashboardAction_input.action?selectedDate=${tomorrowString}&selectedZip11=${selectedZip}`;
+
+    // Create new buttons and date span
+    let btnDiv = document.createElement('div');
+    btnDiv.className = 'showAddress';
+    let btnPrev = document.createElement('button');
+    let btnNext = document.createElement('button');
+    let dateSpan = document.createElement('span');
+    btnPrev.textContent = yesterdayLabel;
+    btnNext.textContent = tomorrowLabel;
+    dateSpan.textContent = `${('0' + (currentDate.getMonth()+1)).slice(-2)}/${('0' + currentDate.getDate()).slice(-2)}/${currentDate.getFullYear()}`;
+    btnPrev.onclick = function() {window.location.href = yesterdayUrl;};
+    btnNext.onclick = function() {window.location.href = tomorrowUrl;};
+    btnDiv.appendChild(btnNext);
+    btnDiv.appendChild(dateSpan);
+    btnDiv.appendChild(btnPrev);
+
+    // Get the address bar element
+    let addressBar = document.getElementById('MPAAddressBar');
+
+    // Insert the new button div below the address bar
+    if (addressBar) {
+        addressBar.parentNode.insertBefore(btnDiv, addressBar.nextSibling);
+    }
+
+})();
