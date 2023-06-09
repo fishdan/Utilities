@@ -12,7 +12,7 @@
     'use strict';
 
     // Add styles for button div
-    GM_addStyle('.showAddress button, .showAddress span { margin: 0 10px; }');
+    GM_addStyle('.welcometext { display: flex; justify-content: center; gap: 20px; margin-bottom: 20px; align-items: center; } .welcometext span { background-color: yellow; padding: 5px; }');
 
     // Get current date from URL
     let urlParams = new URLSearchParams(window.location.search);
@@ -37,7 +37,7 @@
 
     // Create new buttons and date span
     let btnDiv = document.createElement('div');
-    btnDiv.className = 'showAddress';
+    btnDiv.className = 'welcometext';
     let btnPrev = document.createElement('button');
     let btnNext = document.createElement('button');
     let dateSpan = document.createElement('span');
