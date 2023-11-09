@@ -3,7 +3,7 @@
 // @namespace    http://tampermonkey.net/
 // @version      0.1
 // @description  Reverse highlighted text on Ctrl+Q and navigate to it as a URL
-// @author       You
+// @author       fishdan
 // @match        *://*/*
 // @grant        none
 // ==/UserScript==
