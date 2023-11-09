@@ -1,6 +1,6 @@
 # tampermonkey-scripts
 
-These are some common Modern Tribe Tampermonkey scripts.
+These are of fishdan's Tampermonkey scripts.
 
 ## Installation
 
