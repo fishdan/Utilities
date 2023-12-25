@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1776 URL to QR Code Generator</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-light p-4">
+
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <h2 class="text-center mb-4">URL to QR Code Generator</h2>
+                
+                <div class="input-group mb-4">
+                    <input type="text" class="form-control" id="url-input" placeholder="Enter your URL here">
+                    <div class="input-group-append">
+                        <button class="btn btn-primary" onclick="generateQRCode()">Generate QR Code</button>
+                    </div>
+                </div>
+
+                <div class="text-center mb-4">
+                    <div id="qrcode"></div>
+                    <div font-italic>After generating, right click on the QR code and choose "save image as" to download</div>
+                </div>
+
+                <div class="card p-4 d-none" id="tip-card">
+                    <h5 class="card-title text-center">This service is free, use this QR code if you want to tip me.</h5>
+                    <div class="text-center">
+                        <a href="https://www.paypal.com/donate/?hosted_button_id=DLYR7NJ5R9ABQ"><img src="./tipjar.png" alt="Tip Jar QR Code" class="img-fluid"></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript for QRCode -->
+    <script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
+    <script>
+
+        document.getElementById('url-input').addEventListener('keydown', function(event) {
+            if (event.key === 'Enter' || event.keyCode === 13) {
+                generateQRCode();
+            }
+        });
+
+        function generateQRCode() {
+            const urlInput = document.getElementById('url-input').value;
+            const qrCodeDiv = document.getElementById('qrcode');
+            qrCodeDiv.innerHTML = ''; // Clear the div
+            if (urlInput.trim()) { // Check if input is not empty
+                new QRCode(qrCodeDiv, urlInput);
+                // Show the tip card after generating the QR code
+                document.getElementById('tip-card').classList.remove('d-none');
+            } else {
+                alert('Please enter a valid URL.');
+            }
+        }
+
+    </script>
+
+    <!-- Bootstrap JS (optional for additional functionalities) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>

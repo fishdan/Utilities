@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>My YouTube Videos</title>
+        <style>
+            .video-container {
+                display: flex;
+                justify-content: space-around;
+                flex-wrap: wrap;
+            }
+            .video {
+                margin: 10px;
+                flex: 1 0 45%; /* this will ensure two videos per row and the videos will wrap to the next line if there isn't enough space */
+                position: relative;
+                padding-bottom: 25%; /* 16:9 Aspect Ratio */
+                height: 0;
+            }
+            .video iframe {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 560px;
+                height: 315px;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>My YouTube Videos</h1>
+        <div class="video-container">
+            <p>
+            <div class="video">
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/1-iS7LArMPA?autoplay=1&mute=1" title="YouTube video 1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+            <div class="video">
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/4yLuA3bPkp4?autoplay=1&mute=1" title="YouTube video 2" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+        </p><p>
+            <div class="video">
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/Lr_X_L-jRu8?autoplay=1&mute=1" title="YouTube video 3" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+            <div class="video">
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/VSSHILnbfyw?autoplay=1&mute=1" title="YouTube video 4" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+        </p>
+        </div>
+    </body>
+</html>

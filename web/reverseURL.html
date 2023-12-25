@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reverse URL</title>
+</head>
+<body>
+
+<h1>Reverse URL Tool</h1>
+
+<!-- Instructions -->
+<p>Enter the URL you wish to reverse in the text field below and click "Reverse & Check" to see the reversed URL. If the reversed URL starts with 'http', the page will automatically redirect to it. Otherwise, the reversed URL will be displayed on the page.</p>
+
+<!-- URL input and buttons -->
+<input type="text" id="urlInput" placeholder="Enter a URL">
+<button onclick="reverseAndRedirect()">Reverse & Check</button>
+<button onclick="resetInput()">Reset</button>
+
+<!-- Output -->
+<p id="reversedOutput"></p>
+
+<script>
+    function reverseAndRedirect() {
+        const urlInput = document.getElementById('urlInput').value;
+        const reversedUrl = urlInput.split('').reverse().join('');
+
+        if (reversedUrl.startsWith('http')) {
+            window.location.href = reversedUrl;
+        } else {
+            document.getElementById('reversedOutput').textContent = reversedUrl;
+        }
+    }
+
+    function resetInput() {
+        document.getElementById('urlInput').value = '';
+        document.getElementById('reversedOutput').textContent = '';
+    }
+</script>
+<hr>
+<p>
+    <em>This service is offered to the public gratis distributed under the MIT License </em>
+</p>
+</body>
+</html>

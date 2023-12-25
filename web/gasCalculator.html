@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fuel Savings Calculator</title>
+    <style>
+        body {
+            font-family: sans-serif;
+        }
+
+        .container {
+            width: 500px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        form {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input {
+            width: 100%;
+            padding: 5px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            padding: 10px;
+            border: 1px solid #ccc;
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
+        }
+
+        .result {
+            text-align: center;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Fuel Savings Calculator</h2>
+
+        <p>Are you considering switching to a more fuel-efficient car? If so, you could save a significant amount of money on gas each week.</p>
+
+        <p>This calculator can help you estimate your potential savings. Simply enter the following information:</p>
+
+        <form id="fuelForm">
+            <label for="gasPrice">Gas price per gallon:</label>
+            <input type="number" step="0.01" id="gasPrice" name="gasPrice" required>
+
+            <label for="weeklyMiles">Miles driven per week:</label>
+            <input type="number" id="weeklyMiles" name="weeklyMiles" required>
+
+            <label for="oldMPG">Gas mileage of old car (MPG):</label>
+            <input type="number" id="oldMPG" name="oldMPG" required>
+
+            <label for="newMPG">Gas mileage of new car (MPG):</label>
+            <input type="number" id="newMPG" name="newMPG" required>
+
+            <button onclick="calculateSavings()">Calculate Savings</button>
+        </form>
+
+        <div id="result"></div>
+
+        <p>Did you know that there are tax incentives available for fuel-efficient cars? You can learn more about these incentives at <a href="https://www.fueleconomy.gov/">https://www.fueleconomy.gov/</a>.</p>
+    </div>
+
+    <script>
+        function calculateSavings() {
+            const gasPrice = parseFloat(document.getElementById('gasPrice').value);
+            const weeklyMiles = parseFloat(document.getElementById('weeklyMiles').value);
+            const oldMPG = parseFloat(document.getElementById('oldMPG').value);
+            const newMPG = parseFloat(document.getElementById('newMPG').value);
+
+            const oldWeeklyGallons = weeklyMiles / oldMPG;
+            const newWeeklyGallons = weeklyMiles / newMPG;
+
+            const weeklySavings = (oldWeeklyGallons - newWeeklyGallons) * gasPrice;
+
+            const resultElement = document.getElementById('result');
+            resultElement.textContent = `Your weekly savings would be: $${weeklySavings.toFixed(2)}`;
+        }
+    </script>
+</body>
+</html>

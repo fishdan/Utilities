@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background-color: #f0f0f0;
+      font-family: Arial, sans-serif;
+    }
+
+    ul {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    li {
+      padding: 1em;
+      border: 1px solid #ccc;
+      margin-bottom: 1em;
+    }
+  </style>
+</head>
+<body>
+  <ul id="echoList"></ul>
+
+  <script>
+    function getParameterByName(name, url = window.location.href) {
+        name = name.replace(/[\[\]]/g, '\\$&');
+        var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+            results = regex.exec(url);
+        if (!results) return null;
+        if (!results[2]) return '';
+        return decodeURIComponent(results[2].replace(/\+/g, ' '));
+    }
+
+    const echoParam = getParameterByName('echo');
+    
+    if (echoParam) {
+        const echoList = document.getElementById('echoList');
+
+        for (let i = 0; i < 10; i++) {
+            const li = document.createElement('li');
+            li.textContent = echoParam;
+            echoList.appendChild(li);
+        }
+    }
+  </script>
+</body>
+</html>

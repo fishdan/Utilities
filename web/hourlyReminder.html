@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Medication Reminder App</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            document.getElementById("myForm").addEventListener("submit", function(event) {
+                event.preventDefault();
+                var eventName = document.getElementById("eventName").value;
+                var firstOccurrence = new Date(document.getElementById("firstOccurrence").value);
+                var intervalHours = parseInt(document.getElementById("intervalHours").value);
+                var durationDays = parseInt(document.getElementById("durationDays").value);
+                var icalEvents = generateICalEvents(eventName, firstOccurrence, intervalHours, durationDays);
+                downloadICalFile(icalEvents, eventName);
+            });
+
+
+            function generateICalEvents(eventName, firstOccurrence, intervalHours, durationDays) {
+                var events = ["BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//Your App//EN"];
+                var totalOccurrences = (durationDays * 24) / intervalHours;
+                var eventTime = new Date(firstOccurrence.getTime());
+
+                for (var i = 0; i < totalOccurrences; i++) {
+                    if (i > 0) eventTime.setHours(eventTime.getHours() + intervalHours);
+                    events.push(createICalEvent(eventName, new Date(eventTime)));
+                }
+                events.push("END:VCALENDAR");
+                return events.join("\r\n");
+            }
+
+            function createICalEvent(name, startTime) {
+                return "BEGIN:VEVENT\n" +
+                       "DTSTART:" + formatDateToICal(startTime) + "\n" +
+                       "SUMMARY:" + name + "\n" +
+                       "BEGIN:VALARM\n" +
+                       "TRIGGER:-PT10M\n" +
+                       "ACTION:DISPLAY\n" +
+                       "DESCRIPTION:Reminder\n" +
+                       "END:VALARM\n" +
+                       "END:VEVENT";
+            }
+
+            function formatDateToICal(date) {
+                return date.toISOString().replace(/-|:|\.\d\d\d/g, "");
+            }
+
+            function downloadICalFile(icalEvents, eventName) {
+                var sanitizedEventName = eventName.replace(/[^a-z0-9]/gi, '_').toLowerCase(); // Sanitize the event name
+                var blob = new Blob([icalEvents], { type: "text/calendar" });
+                var url = window.URL.createObjectURL(blob);
+                var a = document.createElement("a");
+                a.href = url;
+                a.download = sanitizedEventName + "_reminders.ics";
+                document.body.appendChild(a);
+                a.click();
+                window.URL.revokeObjectURL(url);
+            }
+
+        });
+    </script>
+</head>
+<body>
+    <div class="container mt-4">
+        <h1 class="mb-3">Medication Reminder App</h1>
+        
+        <p class="lead">Welcome to the Medication Reminder App! This tool helps you manage your medication schedule by creating personalized reminders. Simply enter the name of your medication, the time of your first dose, the frequency of doses in hours, and the total duration in days. Our app will generate a calendar file with all your reminders, complete with alerts 10 minutes before each dose. This is especially useful for medications that require strict adherence to timing, ensuring you never miss a dose. Download the file and import it into your favorite calendar app to start receiving reminders.</p>
+
+        <form id="myForm">
+            <div class="form-group">
+                <label for="eventName">Event Name:</label>
+                <input type="text" id="eventName" name="eventName" class="form-control" required>
+            </div>
+
+            <div class="form-group">
+                <label for="firstOccurrence">First Occurrence:</label>
+                <input type="datetime-local" id="firstOccurrence" name="firstOccurrence" class="form-control" required>
+            </div>
+
+            <div class="form-group">
+                <label for="intervalHours">Interval in Hours:</label>
+                <input type="number" id="intervalHours" name="intervalHours" min="1" class="form-control" required>
+            </div>
+
+            <div class="form-group">
+                <label for="durationDays">Duration in Days:</label>
+                <input type="number" id="durationDays" name="durationDays" min="1" class="form-control" required>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Create Reminder</button>
+        </form>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+</html>
+
