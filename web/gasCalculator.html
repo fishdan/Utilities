@@ -71,7 +71,7 @@
             <label for="newMPG">Gas mileage of new car (MPG):</label>
             <input type="number" id="newMPG" name="newMPG" required>
 
-            <button onclick="calculateSavings()">Calculate Savings</button>
+            <button onclick="calculateSavings(event)">Calculate Savings</button>
         </form>
 
         <div id="result"></div>
@@ -80,7 +80,8 @@
     </div>
 
     <script>
-        function calculateSavings() {
+        function calculateSavings(event) {
+            event.preventDefault();
             const gasPrice = parseFloat(document.getElementById('gasPrice').value);
             const weeklyMiles = parseFloat(document.getElementById('weeklyMiles').value);
             const oldMPG = parseFloat(document.getElementById('oldMPG').value);
