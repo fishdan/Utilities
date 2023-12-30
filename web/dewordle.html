@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Hangman Game</title>
+    <style>
+        .correct { background-color: lightgreen; }
+        .partial { background-color: yellow; }
+        .input-cell { width: 20px; text-transform: uppercase; }
+        table { border-collapse: collapse; }
+        td { padding: 5px; }
+        input { text-align: center; }
+    </style>
+</head>
+<body>
+    <h1>Hangman Game</h1>
+    <table id="guessTable">
+        <!-- Table rows will be added here dynamically -->
+    </table>
+    <script>
+        window.onload = function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const encodedWord = urlParams.get('word');
+            if (!encodedWord) {
+                alert('No word provided in the URL.');
+                return;
+            }
+
+            const word = atob(encodedWord).toUpperCase();
+            let attempts = [];
+
+            function createInputRow() {
+                const row = document.createElement('tr');
+                for (let i = 0; i < word.length; i++) {
+                    const cell = document.createElement('td');
+                    const input = document.createElement('input');
+                    input.type = 'text';
+                    input.maxLength = 1;
+                    input.className = 'input-cell';
+                    cell.appendChild(input);
+                    row.appendChild(cell);
+                }
+                const submitCell = document.createElement('td');
+                const submitButton = document.createElement('button');
+                submitButton.textContent = 'Submit';
+                submitButton.onclick = checkGuess;
+                submitCell.appendChild(submitButton);
+                row.appendChild(submitCell);
+
+                document.getElementById('guessTable').appendChild(row);
+            }
+
+            function checkGuess() {
+                const inputs = Array.from(this.parentNode.parentNode.querySelectorAll('input'));
+                const guess = inputs.map(input => input.value.toUpperCase()).join('');
+
+                if (guess.length < word.length) {
+                    alert('Please fill in all letters.');
+                    return;
+                }
+
+                attempts.push(guess);
+                inputs.forEach((input, index) => {
+                    if (word[index] === guess[index]) {
+                        input.classList.add('correct');
+                    } else if (word.includes(guess[index])) {
+                        input.classList.add('partial');
+                    }
+                });
+
+                if (guess !== word) {
+                    createInputRow();
+                } else {
+                    alert('Congratulations! You guessed the word.');
+                }
+            }
+
+            createInputRow();
+        };
+    </script>
+</body>
+</html>

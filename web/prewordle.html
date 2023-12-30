@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Hangman Game Instructions</title>
+</head>
+<body>
+    <h1>Hangman Game Instructions</h1>
+    <p>Welcome to the Hangman game! Here's how to play:</p>
+    <ul>
+        <li>Enter a single letter in each box to guess the word.</li>
+        <li>If the letter is correct and in the right position, the box will turn green.</li>
+        <li>If the letter is in the word but in the wrong position, the box will turn yellow.</li>
+        <li>Keep guessing until you find the whole word.</li>
+        <li>New rows will be added for each guess.</li>
+    </ul>
+
+    <h2>Start a New Game</h2>
+    <p>Enter a word below to generate a unique Hangman game link:</p>
+    <input type="text" id="wordInput" placeholder="Enter a word" />
+    <button onclick="generateLink()">Generate Game Link</button>
+    
+    <p id="gameLink"></p>
+
+    <script>
+        function generateLink() {
+            var word = document.getElementById('wordInput').value;
+            var encodedWord = btoa(word);
+            var link = 'https://www.cs.umb.edu/~dfish/dewordle.html?word=' + encodedWord;
+            document.getElementById('gameLink').innerHTML = '<a href="' + link + '">Play Hangman with your word</a>';
+        }
+    </script>
+</body>
+</html>
