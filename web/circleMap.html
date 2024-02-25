@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Centered Circle on Google Maps</title>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDn4Ax6fHFUu_Mf2JFAeugC4XOyxTThS8c&libraries=geometry&callback=initMap" async defer></script>
+    <style>
+        /* Set the size of the map */
+        #map {
+            height: 500px;
+            width: 500px;
+        }
+    </style>
+    <script>
+        let map;
+        let shape; // This will hold either the circle or the rectangle (square)
+
+        function initMap() {
+            const mapCenter = {lat: 38.678718879977424, lng: -77.07287346605321};
+            map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 12,
+                center: mapCenter
+            });
+
+            // Default to showing a circle
+            //updateShape('circle');
+
+            google.maps.event.addListener(map, 'idle', function() {
+                updateShape(document.querySelector('input[name="shape"]:checked').value);
+            });
+        }
+
+        function updateShape(shapeType) {
+            // Remove existing shape
+            if (shape) {
+                shape.setMap(null);
+            }
+
+            const center = map.getCenter();
+            const bounds = map.getBounds();
+            if (!bounds) return; // Exit if bounds are not ready
+
+            const ne = bounds.getNorthEast();
+            const sw = bounds.getSouthWest();
+            const width = google.maps.geometry.spherical.computeDistanceBetween(new google.maps.LatLng(center.lat(), ne.lng()), new google.maps.LatLng(center.lat(), sw.lng()));
+            const height = google.maps.geometry.spherical.computeDistanceBetween(new google.maps.LatLng(ne.lat(), center.lng()), new google.maps.LatLng(sw.lat(), center.lng()));
+            const smallerDimension = Math.min(width, height);
+            const size = smallerDimension / 4;
+
+            if (shapeType === 'circle') {
+                shape = new google.maps.Circle({
+                    strokeColor: '#FF0000',
+                    strokeOpacity: 0.8,
+                    strokeWeight: 2,
+                    fillColor: '#FF0000',
+                    fillOpacity: 0.35,
+                    map,
+                    center: center,
+                    radius: size,
+                });
+            } else if (shapeType === 'square') {
+                const northEastCorner = google.maps.geometry.spherical.computeOffset(center, size, 45);
+                const southWestCorner = google.maps.geometry.spherical.computeOffset(center, size, 225);
+                shape = new google.maps.Rectangle({
+                    strokeColor: '#FF0000',
+                    strokeOpacity: 0.8,
+                    strokeWeight: 2,
+                    fillColor: '#FF0000',
+                    fillOpacity: 0.35,
+                    map,
+                    bounds: new google.maps.LatLngBounds(southWestCorner, northEastCorner),
+                });
+            }
+        }
+    </script>
+
+</head>
+<body onload="initMap()">
+    <div id="map"></div>
+    <label><input type="radio" name="shape" value="circle" checked onclick="updateShape(this.value)"> Circle</label>
+    <label><input type="radio" name="shape" value="square" onclick="updateShape(this.value)"> Square</label>
+</body>
+</html>
