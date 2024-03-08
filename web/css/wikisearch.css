@@ -1,0 +1,10 @@
+.wiki-search {
+    color: #0000EE; /* Traditional link blue */
+    text-decoration: underline; /* Underline to indicate clickability */
+    cursor: pointer; /* Changes the cursor to indicate the element is clickable */
+}
+
+.wiki-search:hover {
+    color: #551A8B; /* Darker blue on hover */
+    text-decoration: none; /* Example effect on hover */
+}

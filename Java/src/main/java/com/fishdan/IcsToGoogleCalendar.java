@@ -94,7 +94,6 @@ public class IcsToGoogleCalendar {
 
     public static void main(String[] args) {
         // Replace "path/to/your/event.ics" with the actual path to an ICS file to test your method
-        if
         try {
             Desktop.getDesktop().browse(parseIcsFile(args[0]).toURI());
         } catch (IOException | URISyntaxException e) {
