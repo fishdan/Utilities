@@ -4,28 +4,38 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dynamic Wikipedia Search Links</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="css/wikisearch.css">
 </head>
 <body>
 
-<h2>Dynamic Wikipedia Search Functionality Explained</h2>
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-12">
+            <h2 class="mb-4">Dynamic Wikipedia Search Functionality Explained</h2>
 
-<p>This page demonstrates a powerful feature that automatically transforms certain hyperlinks into interactive elements, leading users directly to Wikipedia search results based on the link's text. This functionality is especially beneficial for content creators and managers using platforms like WordPress, as it simplifies the process of linking to informative resources. Rather than manually searching for and linking each Wikipedia article, content managers can merely use a placeholder link that our script will dynamically convert into a direct Wikipedia search link upon page load.</p>
+            <p>This page demonstrates a powerful feature that automatically transforms certain hyperlinks into interactive elements, leading users directly to Wikipedia search results based on the link's text. This functionality is especially beneficial for content creators and managers using platforms like WordPress, as it simplifies the process of linking to informative resources. Rather than manually searching for and linking each Wikipedia article, content managers can merely use a placeholder link that our script will dynamically convert into a direct Wikipedia search link upon page load.</p>
 
-<p>Here's how it works: By setting a link's <code>href</code> attribute to include the keyword "wikisearch" and then appending the JavaScript and CSS files to your theme, any text linked in this manner on your site will automatically guide users to a Wikipedia search for that text. This not only enhances the user experience by providing immediate access to additional information but also streamlines content creation and enrichment within CMS platforms.</p>
+            <p>Here's how it works: By setting a link's <code>href</code> attribute to include the keyword "wikisearch" and then appending the JavaScript and CSS files to your theme, any text linked in this manner on your site will automatically guide users to a Wikipedia search for that text. This not only enhances the user experience by providing immediate access to additional information but also streamlines content creation and enrichment within CMS platforms.</p>
 
-<p><strong>Example of a Modified Link:</strong></p>
+            <p><strong>Example of a Modified Link:</strong></p>
 
-<!-- Example Link -->
-<a href="wikisearch">Galveston, Texas</a>
+            <!-- Example Link -->
+            <a href="wikisearch" class="wiki-link">Galveston, Texas</a>
+
+            <p class="mt-4">For those interested in implementing this feature, the source code is available on GitHub:</p>
+            <ul>
+                <li>HTML Wrapper: <a href="https://github.com/fishdan/Utilities/blob/main/web/wikisearch.html">View HTML</a></li>
+                <li>JavaScript: <a href="https://github.com/fishdan/Utilities/blob/main/web/js/wikisearch.js">View JS</a></li>
+                <li>CSS: <a href="https://github.com/fishdan/Utilities/blob/main/web/css/wikisearch.css">View CSS</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
 
 <script src="js/wikisearch.js"></script>
-
-<p>For those interested in implementing this feature, the source code is available on GitHub:</p>
-<ul>
-    <li>HTML Wrapper: <a href="https://github.com/fishdan/Utilities/blob/main/web/wikisearch.html">View HTML</a></li>
-    <li>JavaScript: <a href="https://github.com/fishdan/Utilities/blob/main/web/js/wikisearch.js">View JS</a></li>
-    <li>CSS: <a href="https://github.com/fishdan/Utilities/blob/main/web/css/wikisearch.css">View CSS</a></li>
-</ul>
+<!-- Optional: include Bootstrap JS bundle -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
