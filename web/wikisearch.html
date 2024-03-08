@@ -3,17 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Convert WikiSearch Links</title>
-    <link rel="stylesheet" href="css/wikisearch.css">
+    <title>Dynamic Wikipedia Search Links</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-This should take you to the search page on wikipedia for Galveston, Texas, even though the href was *originally * set to https://wikisearch.  To see what's happening under the covers, download the source of the html
 
+<h2>Dynamic Wikipedia Search Functionality Explained</h2>
 
-<p>
-    <a href="https://wikisearch">Galveston, Texas</a>
-</p>
+<p>This page demonstrates a powerful feature that automatically transforms certain hyperlinks into interactive elements, leading users directly to Wikipedia search results based on the link's text. This functionality is especially beneficial for content creators and managers using platforms like WordPress, as it simplifies the process of linking to informative resources. Rather than manually searching for and linking each Wikipedia article, content managers can merely use a placeholder link that our script will dynamically convert into a direct Wikipedia search link upon page load.</p>
 
-<script src="js/wikisearch.js"></script>
+<p>Here's how it works: By setting a link's <code>href</code> attribute to include the keyword "wikisearch" and then appending the JavaScript and CSS files to your theme, any text linked in this manner on your site will automatically guide users to a Wikipedia search for that text. This not only enhances the user experience by providing immediate access to additional information but also streamlines content creation and enrichment within CMS platforms.</p>
+
+<p><strong>Example of a Modified Link:</strong></p>
+
+<!-- Example Link -->
+<a href="wikisearch">Galveston, Texas</a>
+
+<script src="script.js"></script>
 </body>
 </html>
