@@ -4,7 +4,7 @@ Plugin Name: WikiSearch Links
 Plugin URI: https://yourwebsite.com/wikisearch-links
 Description: Transforms specified hyperlinks into interactive elements for Wikipedia searches.
 Version: 1.0
-Author: Your Name
+Author: Dan Fishman
 Author URI: https://yourwebsite.com
 */
 
