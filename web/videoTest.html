@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rotated Video Display 5</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            background-color: #f0f0f0;
+        }
+        .video-container {
+            position: relative;
+            overflow: hidden;
+            background-color: #000;
+            max-width: 100vw;
+            max-height: 80vh; /* Constrain to a smaller vertical size */
+            width: 45vh; /* Aspect ratio 9/16 of height */
+            height: 80vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        #video-wrapper {
+            transform: rotate(90deg);
+            transform-origin: center center;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .video-container video {
+            width: auto;
+            height: 100%;
+            object-fit: contain; /* Ensure video fits within the container */
+            object-position: center; /* Center the video within the container */
+        }
+    </style>
+</head>
+<body>
+<h1>Rotated Video Display</h1>
+<div id="mux-video-container" class="video-container">
+    <div id="video-wrapper">
+        <video id="mux-video" controls>
+            <source src="http://www.cs.umb.edu/~dfish/oriTest.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </div>
+</div>
+</body>
+</html>
