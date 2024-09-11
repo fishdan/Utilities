@@ -1,5 +1,11 @@
 package com.fishdan;
 
+
+import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import java.io.FileInputStream;
+import java.io.File;
+import java.net.URL;
 import net.fortuna.ical4j.data.CalendarBuilder;
 import net.fortuna.ical4j.model.Calendar;
 import net.fortuna.ical4j.model.Component;
@@ -24,36 +30,46 @@ import java.util.Optional;
 public class IcsToGoogleCalendar {
 
     public static URL parseIcsFile(String filePath) {
-        try {
-            FileInputStream fin = new FileInputStream(filePath);
-            CalendarBuilder builder = new CalendarBuilder();
-            Calendar calendar = builder.build(fin);
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Select an ICS file");
+        fileChooser.setAcceptAllFileFilterUsed(false);
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("ICS Files", "ics");
+        fileChooser.addChoosableFileFilter(filter);
 
-            for (Component event : calendar.getComponents(Component.VEVENT)) {
-                if (event instanceof VEvent) {
-                    VEvent vEvent = (VEvent) event;
+        int result = fileChooser.showOpenDialog(null);  // null makes the dialog a top-level window
+        if (result == JFileChooser.APPROVE_OPTION) {
+            File selectedFile = fileChooser.getSelectedFile();
+            try {
+                FileInputStream fin = new FileInputStream(selectedFile);
+                CalendarBuilder builder = new CalendarBuilder();
+                Calendar calendar = builder.build(fin);
 
-                    Optional<DtStart> startOpt = vEvent.getProperty(Property.DTSTART);
-                    DtStart start = startOpt.orElseThrow(() -> new RuntimeException("Start date is missing"));
+                for (Component event : calendar.getComponents(Component.VEVENT)) {
+                    if (event instanceof VEvent) {
+                        VEvent vEvent = (VEvent) event;
 
-                    Optional<DtEnd> endOpt = vEvent.getProperty(Property.DTEND);
-                    DtEnd end = endOpt.orElseThrow(() -> new RuntimeException("End date is missing"));
+                        Optional<DtStart> startOpt = vEvent.getProperty(Property.DTSTART);
+                        DtStart start = startOpt.orElseThrow(() -> new RuntimeException("Start date is missing"));
 
-                    Optional<Summary> summaryOpt = vEvent.getProperty(Property.SUMMARY);
-                    Summary summary = summaryOpt.orElseThrow(() -> new RuntimeException("Summary is missing"));
+                        Optional<DtEnd> endOpt = vEvent.getProperty(Property.DTEND);
+                        DtEnd end = endOpt.orElseThrow(() -> new RuntimeException("End date is missing"));
 
-                    Optional<Description> descriptionOpt = vEvent.getProperty(Property.DESCRIPTION);
-                    Description description = descriptionOpt.orElseThrow(() -> new RuntimeException("Description is missing"));
+                        Optional<Summary> summaryOpt = vEvent.getProperty(Property.SUMMARY);
+                        Summary summary = summaryOpt.orElseThrow(() -> new RuntimeException("Summary is missing"));
 
-                    Optional<Location> locationOpt = vEvent.getProperty(Property.LOCATION);
-                    Location location = locationOpt.orElseThrow(() -> new RuntimeException("Location is missing"));
+                        Optional<Description> descriptionOpt = vEvent.getProperty(Property.DESCRIPTION);
+                        Description description = descriptionOpt.orElseThrow(() -> new RuntimeException("Description is missing"));
 
-                    // Now you have the event details, you can create a URL for Google Calendar
-                    return createGoogleCalendarUrl(start, end, summary, description, location); // Open this URL in a browser
+                        Optional<Location> locationOpt = vEvent.getProperty(Property.LOCATION);
+                        Location location = locationOpt.orElseThrow(() -> new RuntimeException("Location is missing"));
+
+                        // Now you have the event details, you can create a URL for Google Calendar
+                        return createGoogleCalendarUrl(start, end, summary, description, location); // Open this URL in a browser
+                    }
                 }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-        } catch (Exception e) {
-            e.printStackTrace();
         }
         return null;
     }

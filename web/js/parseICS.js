@@ -4,47 +4,63 @@ function parseICS() {
         const reader = new FileReader();
         reader.onload = function(e) {
             const contents = e.target.result;
-            const event = parseICSData(contents);
-            if (event) {
-                const googleCalLink = createGoogleCalendarLink(event);
-                const linkHtml = `<a href="${googleCalLink}" target="_blank">Add to Google Calendar</a>`;
-                document.getElementById('eventLink').innerHTML = linkHtml;
-            }
+            const events = parseICSData(contents);
+            displayEvents(events);
         };
         reader.readAsText(fileInput.files[0]);
     }
 }
 
 function parseICSData(icsData) {
-    const lines = icsData.split(/\r\n|\n|\r/);
-    let event = {};
-    lines.forEach(line => {
-        // Extract the key and value, ignoring any parameters like language
-        let [key, ...valueParts] = line.split(':');
-        let value = valueParts.join(':').trim();
-        let keyParts = key.split(';');
-        key = keyParts[0].trim();
+    const events = [];
+    let lines = icsData.split(/\r\n|\n|\r/);
+    let event = null;
 
-        switch (key) {
-            case 'SUMMARY':
-                event.summary = value;
-                break;
-            case 'DTSTART':
-                event.start = value;
-                break;
-            case 'DTEND':
-                event.end = value;
-                break;
-            case 'DESCRIPTION':
-                event.description = value.replace(/\\n/g, '\n'); // Handling escaped newlines
-                break;
-            case 'LOCATION':
-                // Remove backslashes and handle escaped newlines if present
-                event.location = value.replace(/\\/g, '').replace(/\\n/g, ', ');
-                break;
+    lines.forEach(line => {
+        if (line === 'BEGIN:VEVENT') {
+            event = {};
+        } else if (line === 'END:VEVENT') {
+            events.push(event);
+            event = null;
+        } else if (event) {
+            let [key, ...valueParts] = line.split(':');
+            let value = valueParts.join(':').trim();
+            let keyParts = key.split(';');
+            key = keyParts[0].trim();
+
+            switch (key) {
+                case 'SUMMARY':
+                    event.summary = value;
+                    break;
+                case 'DTSTART':
+                    event.start = value;
+                    break;
+                case 'DTEND':
+                    event.end = value;
+                    break;
+                case 'DESCRIPTION':
+                    event.description = value.replace(/\\n/g, '\n');
+                    break;
+                case 'LOCATION':
+                    event.location = value.replace(/\\/g, '').replace(/\\n/g, ', ');
+                    break;
+            }
         }
     });
-    return event;
+    return events;
+}
+
+function displayEvents(events) {
+    const container = document.getElementById('eventLink');
+    if (events.length > 5) {
+        container.innerHTML = `<p>There are ${events.length} events in this file. It is recommended to import this ICS file manually into your calendar.</p>`;
+    } else {
+        let links = events.map(event => {
+            const link = createGoogleCalendarLink(event);
+            return `<a href="${link}" target="_blank">Add "${event.summary}" to Google Calendar</a><br>`;
+        }).join('');
+        container.innerHTML = links;
+    }
 }
 
 function createGoogleCalendarLink(event) {
@@ -61,7 +77,5 @@ function createGoogleCalendarLink(event) {
 }
 
 function formatDateTime(dt) {
-    // Format should be: YYYYMMDDTHHmmssZ for UTC time.
-    // Here we assume the ICS provides UTC time; adjust parsing as needed.
     return dt.replace(/(\d{4})(\d{2})(\d{2})T(\d{2})(\d{2})(\d{2})/, '$1$2$3T$4$5$6Z');
 }
