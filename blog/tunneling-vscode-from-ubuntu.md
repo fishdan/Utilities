@@ -76,3 +76,11 @@ This setup has been a game changer for me. By using an old PC as a dedicated dev
 - [MariaDB Official Site](https://mariadb.org/)
 
 By setting this up, you’ll not only streamline your development environment but also gain some hands-on experience with networking and system administration—skills that will definitely come in handy!
+
+### How to Edit This Blog Post
+
+1. Click [here](https://github.com/fishdan/Utilities/edit/main/blog/tunneling-vscode-from-ubuntu.md) to edit this blog post.
+2. Make your changes in the editor.
+3. Write a descriptive commit message.
+4. Submit a Pull Request with your changes.
+
