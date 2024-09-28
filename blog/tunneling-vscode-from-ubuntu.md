@@ -67,6 +67,10 @@ While you're at it, you can install [MariaDB](https://mariadb.org/) on Dubuntu, 
 
 This setup has been a game changer for me. By using an old PC as a dedicated dev machine running Ubuntu, I can free up my Windows machine for non-development tasks and enjoy better performance all around. So, if you've got an old PC gathering dust, consider turning it into your very own dedicated development server!
 
+### Potential Issues
+
+Your vanilla Ubuntu setup should allow xforwarding, but if it doesn't, try asking chatGPT how to enable xForwarding on your ubuntu box
+
 **Helpful Links:**
 - [Create a live USB with Ubuntu](https://ubuntu.com/tutorials/create-a-usb-stick-on-windows)
 - [How to install Ubuntu](https://ubuntu.com/tutorials/install-ubuntu-desktop)
