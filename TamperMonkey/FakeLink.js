@@ -1,35 +1,38 @@
 // ==UserScript==
-// @name         Replace Fake Link
+// @name         Dynamic Link Replacer
 // @namespace    http://tampermonkey.net/
 // @version      0.1
-// @description  Replace >>my_fake_link_com<< with a clickable link to https://my.fake.link.com
+// @description  Replace >>text_with_underscores<< with a clickable link by changing underscores to dots
 // @match        *://*/*
-// @author       fishdan
 // @grant        none
 // ==/UserScript==
 
 (function() {
     'use strict';
 
-    function replaceFakeLink() {
-        // Find all text nodes
+    function replaceDynamicLinks() {
         const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, null, false);
         let node;
+
         while (node = walker.nextNode()) {
-            if (node.nodeValue.includes(">>my_fake_link_com<<")) {
-                // Replace the text with an anchor element
+            // Use a regular expression to match >>text_with_underscores<< format
+            const regex = />>([a-zA-Z0-9_]+)<</g;
+            if (node.nodeValue.match(regex)) {
+                // Replace matched text patterns with links
                 const span = document.createElement("span");
-                span.innerHTML = node.nodeValue.replace(
-                    />>my_fake_link_com<</g,
-                    '<a href="https://my.fake.link.com" target="_blank">my.fake.link.com</a>'
-                );
+                span.innerHTML = node.nodeValue.replace(regex, (match, p1) => {
+                    const linkText = p1.replace(/_/g, '.');   // Convert underscores to dots for display
+                    const linkURL = `https://${linkText}`;    // Add https:// prefix for the URL
+                    return `<a href="${linkURL}" target="_blank">${linkText}</a>`;
+                });
                 node.parentNode.replaceChild(span, node);
             }
         }
     }
 
     // Run the function initially and then every 10 seconds
-    replaceFakeLink();
-    setInterval(replaceFakeLink, 10000);
+    replaceDynamicLinks();
+    setInterval(replaceDynamicLinks, 10000);
 
 })();
+
