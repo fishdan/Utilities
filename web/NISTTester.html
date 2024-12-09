@@ -33,6 +33,10 @@
         "123456", "password", "123456789", "12345678", "12345", "1234567", "qwerty", "abc123"
     ];
 
+    /**
+     * This method tests passwords using the new 2024 NIST standards as documented at
+     * https://www.hipaajournal.com/nist-password-guidelines-update-2024/
+     */
     function testPassword() {
         const password = document.getElementById("password").value;
         const results = document.getElementById("results");
