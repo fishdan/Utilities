@@ -60,12 +60,32 @@
                 document.getElementById('guessTable').appendChild(row);
             }
 
-            function checkGuess() {
+            async function checkWordValidity(guess) {
+                const apiUrl = `https://api.dictionaryapi.dev/api/v2/entries/en/${guess}`;
+                try {
+                    const response = await fetch(apiUrl);
+                    if (response.ok) {
+                        return true; // Word is valid
+                    }
+                    return false; // Word is not valid
+                } catch (error) {
+                    console.error('Error checking word validity:', error);
+                    return false; // Assume invalid if API fails
+                }
+            }
+
+            async function checkGuess() {
                 const inputs = Array.from(this.parentNode.parentNode.querySelectorAll('input'));
                 const guess = inputs.map(input => input.value.toUpperCase()).join('');
 
                 if (guess.length < word.length) {
                     alert('Please fill in all letters.');
+                    return;
+                }
+
+                const isValid = await checkWordValidity(guess);
+                if (!isValid) {
+                    alert('The word is not in the dictionary. Please try again.');
                     return;
                 }
 
@@ -87,6 +107,7 @@
 
             createInputRow();
         };
+
     </script>
 </body>
 </html>
