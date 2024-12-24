@@ -19,93 +19,107 @@
     </table>
     <script>
         window.onload = function() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const encodedWord = urlParams.get('word');
-            if (!encodedWord) {
-                alert('No word provided in the URL.');
-                return;
-            }
+            window.onload = function() {
+                const urlParams = new URLSearchParams(window.location.search);
+                const encodedWord = urlParams.get('word');
+                if (!encodedWord) {
+                    alert('No word provided in the URL.');
+                    return;
+                }
 
-            const word = atob(encodedWord).toUpperCase();
-            let attempts = [];
+                const word = atob(encodedWord).toUpperCase();
+                let attempts = [];
 
-            function createInputRow() {
-                const row = document.createElement('tr');
-                for (let i = 0; i < word.length; i++) {
-                    const cell = document.createElement('td');
-                    const input = document.createElement('input');
-                    input.type = 'text';
-                    input.maxLength = 1;
-                    input.className = 'input-cell';
+                function createInputRow() {
+                    const row = document.createElement('tr');
+                    for (let i = 0; i < word.length; i++) {
+                        const cell = document.createElement('td');
+                        const input = document.createElement('input');
+                        input.type = 'text';
+                        input.maxLength = 1;
+                        input.className = 'input-cell';
 
-                    // Add event listener to move focus to the next input
-                    input.addEventListener('input', function() {
-                        if (this.value.length === 1) {
-                            const nextInput = this.parentElement.nextElementSibling?.querySelector('input');
-                            if (nextInput) nextInput.focus();
+                        // Add event listener to move focus to the next input on letter entry
+                        input.addEventListener('input', function() {
+                            if (this.value.length === 1) {
+                                const nextInput = this.parentElement.nextElementSibling?.querySelector('input');
+                                if (nextInput) nextInput.focus();
+                            }
+                        });
+
+                        // Add event listener for arrow key navigation
+                        input.addEventListener('keydown', function(event) {
+                            if (event.key === 'ArrowRight') {
+                                const nextInput = this.parentElement.nextElementSibling?.querySelector('input');
+                                if (nextInput) nextInput.focus();
+                            } else if (event.key === 'ArrowLeft') {
+                                const prevInput = this.parentElement.previousElementSibling?.querySelector('input');
+                                if (prevInput) prevInput.focus();
+                            }
+                        });
+
+                        cell.appendChild(input);
+                        row.appendChild(cell);
+                    }
+
+                    const submitCell = document.createElement('td');
+                    const submitButton = document.createElement('button');
+                    submitButton.textContent = 'Submit';
+                    submitButton.onclick = checkGuess;
+                    submitCell.appendChild(submitButton);
+                    row.appendChild(submitCell);
+
+                    document.getElementById('guessTable').appendChild(row);
+                }
+
+                async function checkWordValidity(guess) {
+                    const apiUrl = `https://api.dictionaryapi.dev/api/v2/entries/en/${guess}`;
+                    try {
+                        const response = await fetch(apiUrl);
+                        if (response.ok) {
+                            return true; // Word is valid
+                        }
+                        return false; // Word is not valid
+                    } catch (error) {
+                        console.error('Error checking word validity:', error);
+                        return false; // Assume invalid if API fails
+                    }
+                }
+
+                async function checkGuess() {
+                    const inputs = Array.from(this.parentNode.parentNode.querySelectorAll('input'));
+                    const guess = inputs.map(input => input.value.toUpperCase()).join('');
+
+                    if (guess.length < word.length) {
+                        alert('Please fill in all letters.');
+                        return;
+                    }
+
+                    const isValid = await checkWordValidity(guess);
+                    if (!isValid) {
+                        alert('The word is not in the dictionary. Please try again.');
+                        return;
+                    }
+
+                    attempts.push(guess);
+                    inputs.forEach((input, index) => {
+                        if (word[index] === guess[index]) {
+                            input.classList.add('correct');
+                        } else if (word.includes(guess[index])) {
+                            input.classList.add('partial');
                         }
                     });
 
-                    cell.appendChild(input);
-                    row.appendChild(cell);
-                }
-
-                const submitCell = document.createElement('td');
-                const submitButton = document.createElement('button');
-                submitButton.textContent = 'Submit';
-                submitButton.onclick = checkGuess;
-                submitCell.appendChild(submitButton);
-                row.appendChild(submitCell);
-
-                document.getElementById('guessTable').appendChild(row);
-            }
-
-            async function checkWordValidity(guess) {
-                const apiUrl = `https://api.dictionaryapi.dev/api/v2/entries/en/${guess}`;
-                try {
-                    const response = await fetch(apiUrl);
-                    if (response.ok) {
-                        return true; // Word is valid
+                    if (guess !== word) {
+                        createInputRow();
+                    } else {
+                        alert('Congratulations! You guessed the word.');
                     }
-                    return false; // Word is not valid
-                } catch (error) {
-                    console.error('Error checking word validity:', error);
-                    return false; // Assume invalid if API fails
-                }
-            }
-
-            async function checkGuess() {
-                const inputs = Array.from(this.parentNode.parentNode.querySelectorAll('input'));
-                const guess = inputs.map(input => input.value.toUpperCase()).join('');
-
-                if (guess.length < word.length) {
-                    alert('Please fill in all letters.');
-                    return;
                 }
 
-                const isValid = await checkWordValidity(guess);
-                if (!isValid) {
-                    alert('The word is not in the dictionary. Please try again.');
-                    return;
-                }
+                createInputRow();
+            };
 
-                attempts.push(guess);
-                inputs.forEach((input, index) => {
-                    if (word[index] === guess[index]) {
-                        input.classList.add('correct');
-                    } else if (word.includes(guess[index])) {
-                        input.classList.add('partial');
-                    }
-                });
-
-                if (guess !== word) {
-                    createInputRow();
-                } else {
-                    alert('Congratulations! You guessed the word.');
-                }
-            }
-
-            createInputRow();
         };
 
     </script>
