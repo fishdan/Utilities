@@ -37,9 +37,19 @@
                     input.type = 'text';
                     input.maxLength = 1;
                     input.className = 'input-cell';
+
+                    // Add event listener to move focus to the next input
+                    input.addEventListener('input', function() {
+                        if (this.value.length === 1) {
+                            const nextInput = this.parentElement.nextElementSibling?.querySelector('input');
+                            if (nextInput) nextInput.focus();
+                        }
+                    });
+
                     cell.appendChild(input);
                     row.appendChild(cell);
                 }
+
                 const submitCell = document.createElement('td');
                 const submitButton = document.createElement('button');
                 submitButton.textContent = 'Submit';
