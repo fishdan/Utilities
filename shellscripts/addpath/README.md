@@ -1,5 +1,5 @@
 ```markdown
-## 🚀 How to Use `addpath.sh`
+## How to Use `addpath.sh`
 
 ### Prerequisites
 - A Unix-like system (Linux, macOS, WSL)
