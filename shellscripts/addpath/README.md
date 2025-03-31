@@ -1,5 +1,3 @@
-Here's the **"How to Use It"** section formatted for a GitHub `README.md`:
-
 ```markdown
 ## 🚀 How to Use `addpath.sh`
 
