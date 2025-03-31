@@ -21,9 +21,10 @@
    chmod +x ~/bin/addpath.sh
    ```
 
-4. **(Optional) Add `~/bin` to your PATH** to run it from anywhere:
+4. **(Optional) Add `~/bin` to your PATH** to run it from anywhere and alias 'ap' to run addpath.sh with the command ap:
    ```bash
    echo 'export PATH="$PATH:$HOME/bin"' >> ~/.bashrc
+   echo 'alias ap="~/bin/addpath.sh"' >> ~/.bashrc
    source ~/.bashrc
    ```
 
