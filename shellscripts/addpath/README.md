@@ -36,7 +36,7 @@
 
 2. Run the script:
    ```bash
-   addpath.sh
+   addpath.sh (or just ap if you made the alias above) 
    ```
 
 3. **Reload your shell** to apply changes:
