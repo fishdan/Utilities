@@ -1,4 +1,3 @@
-```markdown
 ## How to Use `addpath.sh`
 
 ### Prerequisites
@@ -54,7 +53,7 @@ my_script               # Now runs from anywhere!
 
 ### ⚠️ Security Note
 Adding directories to PATH has security implications. Only add trusted directories!
-```
+
 
 ### Key Features
 ✅ **Idempotent** - Won't add duplicates  
