@@ -1,5 +1,5 @@
 #!/bin/bash
-# Maintained at https://github.com/fishdan/Utilities/tree/main/shellscripts/addpathh
+# Maintained at https://github.com/fishdan/Utilities/tree/5670406a6eeada2af0f536fe04c957885d534050/shellscripts/addpath
 
 # Get the current directory
 CURRENT_DIR=$(pwd)
