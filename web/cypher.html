@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Substitution Cipher Tool</title>
+    <title>Tic-Tac-Toe Substitution Cipher</title>
     <style>
         body {
             font-family: monospace;
@@ -28,6 +28,7 @@
             font-size: 24px;
         }
 
+        /* Positional borders */
         .top_left     { border-right: 2px solid black; border-bottom: 2px solid black; }
         .top_center   { border-left: 2px solid black; border-right: 2px solid black; border-bottom: 2px solid black; }
         .top_right    { border-left: 2px solid black; border-bottom: 2px solid black; }
@@ -52,19 +53,58 @@
             text-align: center;
             vertical-align: middle;
             line-height: 50px;
-            margin: 2px; /* <-- Added margin */
+            margin: 2px;
+        }
+
+        #output > div {
+            margin-bottom: 10px;
+        }
+
+        .instructions {
+            max-width: 800px;
+            margin-bottom: 40px;
+            font-family: sans-serif;
+            line-height: 1.6;
         }
     </style>
 </head>
 <body>
 
-<h2>Substitution Cipher Grid</h2>
+<div class="instructions">
+    <h2>Why This Is a Great Cipher</h2>
+    <p>
+        This cipher is a simple and powerful way to encode written messages using nothing more than your memory and a basic understanding of the tic-tac-toe game board. It's easy to learn and use because you only need to remember two things: the alphabet, and how to lay out six 3×3 tic-tac-toe grids — three on top, three directly below them. Each letter from A to Z is placed into the boxes of the top grids, and the corresponding cipher character is taken from the box in the exact same position in the bottom grids. This creates a one-to-one mapping that’s easy to reconstruct and surprisingly secure when handwritten.
+    </p>
+
+    <h3>Make It Your Own</h3>
+    <p>
+        One of the best features of this cipher is how easy it is to personalize. A team can agree on a shared keyword — like <strong>"SMART"</strong> — and use that to fill in the beginning of the alphabet grid (eliminating duplicates), followed by the rest of the unused letters. Others might choose to fill the grid from right-to-left, or top-to-bottom instead of left-to-right. You can even write the cipher grid backward or use emojis, symbols, or foreign alphabets in the bottom half. As long as both parties remember the layout method and substitution pattern, you’ve got a completely custom cipher that doesn’t rely on any electronics or apps.
+    </p>
+
+    <h3>How to Create the Cipher with Pencil and Paper</h3>
+    <p>
+        To make this cipher by hand, draw six tic-tac-toe grids — three across the top row, and three directly below them. Starting with the top-left grid, fill the boxes with the letters A through Z, moving left to right, top to bottom (or using your agreed-upon variation). You’ll use one box for each letter, leaving the last box empty. Now, fill the bottom grids however you like — with a shuffled alphabet, repeating symbols, or even nonsense characters. To encode a message, find each letter in the top grids and write down the character in the same position from the bottom grids. To decode, do the opposite.
+    </p>
+</div>
+
+<h2>Tic-Tac-Toe Cipher Grid</h2>
 <div class="board-container" id="boards"></div>
 
 <div>
+    <label for="keyword">Keyword (optional): </label>
+    <input type="text" id="keyword" style="width: 200px;">
+    <button onclick="buildCipher()">Apply Keyword</button>
+</div>
+
+<div style="margin-top: 20px;">
     <label for="inputText">Enter a sentence (A–Z, spaces): </label><br>
     <input type="text" id="inputText" style="width: 300px;">
     <button onclick="encodeText()">Encode</button>
+</div>
+
+<div style="margin-top: 10px;">
+    <input type="checkbox" id="encodeSpace">
+    <label for="encodeSpace">Encode spaces using the 27th cipher box</label>
 </div>
 
 <div id="output"></div>
@@ -80,73 +120,129 @@
     const bottomCells = [];
     const container = document.getElementById('boards');
 
-    for (let boardIndex = 0; boardIndex < 6; boardIndex++) {
-        const table = document.createElement('table');
-        table.className = 'tic-tac-toe';
-        for (let row = 0; row < 3; row++) {
-            const tr = document.createElement('tr');
-            for (let col = 0; col < 3; col++) {
-                const cell = document.createElement('td');
-                const posIndex = row * 3 + col;
-                const className = positions[posIndex];
-                cell.className = className;
+    function getOffsetAlphabet(keyword) {
+        const base = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        const seen = new Set();
+        const offset = [];
 
-                const globalIndex = boardIndex * 9 + posIndex;
+        keyword = keyword.toUpperCase().replace(/[^A-Z]/g, '');
 
-                // Fill top row with A-Z and 1 blank
-                if (boardIndex < 3) {
-                    if (globalIndex < 26) {
-                        const letter = String.fromCharCode(65 + globalIndex);
-                        cell.textContent = letter;
-                        topCells[globalIndex] = { letter, className };
-                    } else {
-                        cell.textContent = ' ';
-                        topCells[globalIndex] = { letter: ' ', className };
-                    }
-                }
-
-                // Fill bottom row with space / . / x
-                if (boardIndex === 3) {
-                    cell.textContent = ' ';
-                    bottomCells[globalIndex - 27] = { value: ' ', className };
-                } else if (boardIndex === 4) {
-                    cell.textContent = '.';
-                    bottomCells[globalIndex - 27] = { value: '.', className };
-                } else if (boardIndex === 5) {
-                    cell.textContent = 'x';
-                    bottomCells[globalIndex - 27] = { value: 'x', className };
-                }
-
-                tr.appendChild(cell);
+        for (let char of keyword) {
+            if (!seen.has(char)) {
+                seen.add(char);
+                offset.push(char);
             }
-            table.appendChild(tr);
         }
-        container.appendChild(table);
+
+        for (let char of base) {
+            if (!seen.has(char)) {
+                offset.push(char);
+            }
+        }
+
+        return offset;
+    }
+
+    function buildCipher() {
+        const keyword = document.getElementById('keyword').value;
+        const offsetAlphabet = getOffsetAlphabet(keyword);
+
+        topCells.length = 0;
+        container.innerHTML = ''; // Clear existing tables
+
+        for (let boardIndex = 0; boardIndex < 6; boardIndex++) {
+            const table = document.createElement('table');
+            table.className = 'tic-tac-toe';
+            for (let row = 0; row < 3; row++) {
+                const tr = document.createElement('tr');
+                for (let col = 0; col < 3; col++) {
+                    const cell = document.createElement('td');
+                    const posIndex = row * 3 + col;
+                    const className = positions[posIndex];
+                    cell.className = className;
+
+                    const globalIndex = boardIndex * 9 + posIndex;
+
+                    if (boardIndex < 3) {
+                        if (globalIndex < offsetAlphabet.length) {
+                            const letter = offsetAlphabet[globalIndex];
+                            cell.textContent = letter;
+                            topCells[globalIndex] = { letter, className };
+                        } else {
+                            cell.textContent = ' ';
+                            topCells[globalIndex] = { letter: ' ', className };
+                        }
+                    }
+
+                    if (boardIndex === 3) {
+                        cell.textContent = ' ';
+                        bottomCells[globalIndex - 27] = { value: ' ', className };
+                    } else if (boardIndex === 4) {
+                        cell.textContent = '.';
+                        bottomCells[globalIndex - 27] = { value: '.', className };
+                    } else if (boardIndex === 5) {
+                        cell.textContent = 'x';
+                        bottomCells[globalIndex - 27] = { value: 'x', className };
+                    }
+
+                    tr.appendChild(cell);
+                }
+                table.appendChild(tr);
+            }
+            container.appendChild(table);
+        }
     }
 
     function encodeText() {
         const input = document.getElementById('inputText').value.toUpperCase();
+        const encodeSpace = document.getElementById('encodeSpace').checked;
         const outputDiv = document.getElementById('output');
         outputDiv.innerHTML = ''; // Clear previous result
 
-        const words = input.split(' ');
+        if (encodeSpace) {
+            const block = document.createElement('div');
+            for (let ch of input) {
+                let span = document.createElement('span');
+                span.className = 'span-box';
 
-        words.forEach(word => {
-            const line = document.createElement('div');
-            for (let i = 0; i < word.length; i++) {
-                const ch = word[i];
-                if (ch >= 'A' && ch <= 'Z') {
+                if (ch === ' ') {
+                    const cipher = bottomCells[26]; // 27th box
+                    span.classList.add(cipher.className);
+                    span.textContent = cipher.value;
+                } else if (ch >= 'A' && ch <= 'Z') {
                     const index = ch.charCodeAt(0) - 65;
                     const cipher = bottomCells[index];
-                    const encoded = document.createElement('span');
-                    encoded.className = 'span-box ' + cipher.className;
-                    encoded.textContent = cipher.value;
-                    line.appendChild(encoded);
+                    span.classList.add(cipher.className);
+                    span.textContent = cipher.value;
+                } else {
+                    continue; // skip punctuation/numbers
                 }
+
+                block.appendChild(span);
             }
-            outputDiv.appendChild(line);
-        });
+            outputDiv.appendChild(block);
+
+        } else {
+            const words = input.split(' ');
+            words.forEach(word => {
+                const line = document.createElement('div');
+                for (let i = 0; i < word.length; i++) {
+                    const ch = word[i];
+                    if (ch >= 'A' && ch <= 'Z') {
+                        const index = ch.charCodeAt(0) - 65;
+                        const cipher = bottomCells[index];
+                        const encoded = document.createElement('span');
+                        encoded.className = 'span-box ' + cipher.className;
+                        encoded.textContent = cipher.value;
+                        line.appendChild(encoded);
+                    }
+                }
+                outputDiv.appendChild(line);
+            });
+        }
     }
+
+    window.onload = buildCipher;
 </script>
 
 </body>
