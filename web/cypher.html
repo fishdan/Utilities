@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Substitution Cipher Tool</title>
+    <style>
+        body {
+            font-family: monospace;
+            padding: 20px;
+        }
+
+        .board-container {
+            display: grid;
+            grid-template-columns: repeat(3, auto);
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        table.tic-tac-toe {
+            border-collapse: collapse;
+        }
+
+        table.tic-tac-toe td {
+            width: 50px;
+            height: 50px;
+            text-align: center;
+            vertical-align: middle;
+            font-size: 24px;
+        }
+
+        .top_left     { border-right: 2px solid black; border-bottom: 2px solid black; }
+        .top_center   { border-left: 2px solid black; border-right: 2px solid black; border-bottom: 2px solid black; }
+        .top_right    { border-left: 2px solid black; border-bottom: 2px solid black; }
+
+        .center_left  { border-top: 2px solid black; border-right: 2px solid black; border-bottom: 2px solid black; }
+        .center_center{ border: 2px solid black; }
+        .center_right { border-top: 2px solid black; border-left: 2px solid black; border-bottom: 2px solid black; }
+
+        .bottom_left  { border-top: 2px solid black; border-right: 2px solid black; }
+        .bottom_center{ border-top: 2px solid black; border-left: 2px solid black; border-right: 2px solid black; }
+        .bottom_right { border-top: 2px solid black; border-left: 2px solid black; }
+
+        #output {
+            font-size: 24px;
+            margin-top: 20px;
+        }
+
+        .span-box {
+            display: inline-block;
+            width: 50px;
+            height: 50px;
+            text-align: center;
+            vertical-align: middle;
+            line-height: 50px;
+            margin: 2px; /* <-- Added margin */
+        }
+    </style>
+</head>
+<body>
+
+<h2>Substitution Cipher Grid</h2>
+<div class="board-container" id="boards"></div>
+
+<div>
+    <label for="inputText">Enter a sentence (A–Z, spaces): </label><br>
+    <input type="text" id="inputText" style="width: 300px;">
+    <button onclick="encodeText()">Encode</button>
+</div>
+
+<div id="output"></div>
+
+<script>
+    const positions = [
+        'top_left', 'top_center', 'top_right',
+        'center_left', 'center_center', 'center_right',
+        'bottom_left', 'bottom_center', 'bottom_right'
+    ];
+
+    const topCells = [];
+    const bottomCells = [];
+    const container = document.getElementById('boards');
+
+    for (let boardIndex = 0; boardIndex < 6; boardIndex++) {
+        const table = document.createElement('table');
+        table.className = 'tic-tac-toe';
+        for (let row = 0; row < 3; row++) {
+            const tr = document.createElement('tr');
+            for (let col = 0; col < 3; col++) {
+                const cell = document.createElement('td');
+                const posIndex = row * 3 + col;
+                const className = positions[posIndex];
+                cell.className = className;
+
+                const globalIndex = boardIndex * 9 + posIndex;
+
+                // Fill top row with A-Z and 1 blank
+                if (boardIndex < 3) {
+                    if (globalIndex < 26) {
+                        const letter = String.fromCharCode(65 + globalIndex);
+                        cell.textContent = letter;
+                        topCells[globalIndex] = { letter, className };
+                    } else {
+                        cell.textContent = ' ';
+                        topCells[globalIndex] = { letter: ' ', className };
+                    }
+                }
+
+                // Fill bottom row with space / . / x
+                if (boardIndex === 3) {
+                    cell.textContent = ' ';
+                    bottomCells[globalIndex - 27] = { value: ' ', className };
+                } else if (boardIndex === 4) {
+                    cell.textContent = '.';
+                    bottomCells[globalIndex - 27] = { value: '.', className };
+                } else if (boardIndex === 5) {
+                    cell.textContent = 'x';
+                    bottomCells[globalIndex - 27] = { value: 'x', className };
+                }
+
+                tr.appendChild(cell);
+            }
+            table.appendChild(tr);
+        }
+        container.appendChild(table);
+    }
+
+    function encodeText() {
+        const input = document.getElementById('inputText').value.toUpperCase();
+        const outputDiv = document.getElementById('output');
+        outputDiv.innerHTML = ''; // Clear previous result
+
+        const words = input.split(' ');
+
+        words.forEach(word => {
+            const line = document.createElement('div');
+            for (let i = 0; i < word.length; i++) {
+                const ch = word[i];
+                if (ch >= 'A' && ch <= 'Z') {
+                    const index = ch.charCodeAt(0) - 65;
+                    const cipher = bottomCells[index];
+                    const encoded = document.createElement('span');
+                    encoded.className = 'span-box ' + cipher.className;
+                    encoded.textContent = cipher.value;
+                    line.appendChild(encoded);
+                }
+            }
+            outputDiv.appendChild(line);
+        });
+    }
+</script>
+
+</body>
+</html>
