@@ -10,11 +10,7 @@
    mkdir -p ~/bin
    ```
 
-2. **Save the script** to `~/bin/addpath.sh`:
-   ```bash
-   nano ~/bin/addpath.sh
-   ```
-   Paste the script content and save (`Ctrl+X` → `Y` → `Enter`).
+2. **Download the script** to `~/bin/addpath.sh`:
 
 3. **Make it executable**:
    ```bash
