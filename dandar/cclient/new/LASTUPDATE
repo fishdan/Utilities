@@ -1,0 +1,15 @@
+updated: Jan 19, 1998
+------
+More error handling.
+
+updated: Jan 16, 1998
+------
+Better error handling.  The client is now aware if he's been
+disconnected from server.
+
+updated: Jan 15, 1998
+------
+features added:
+- Errors are now displayed on a dialog boxes.
+- Added comments.
+

@@ -1,0 +1,290 @@
+/**
+ * File: ChatClient.java
+ * Date: December 1997-January 1998
+ * Author: Darsono Sutedja
+ *
+ * This is the client window.
+ *
+ * Copyright (c) 1997 Darsono Sutedja
+ */
+
+import java.awt.*;
+import java.awt.event.*;
+import java.util.*;
+import java.io.*;
+import java.net.*;
+
+public class ChatClient extends Frame {
+
+    /*public static void main(String[] argv) {
+        String mode="default", img="052.jpg";
+        if (argv.length>0)
+           mode = argv[0];
+        if (argv.length>1)
+           img  = argv[1];
+        new ChatClient(mode, img);
+    }*/
+
+    //====Constructor====//
+    public ChatClient(PrintStream ps, Socket s) {
+        super("Client for Java Chat 0.1");
+
+        /*MenuBar mb = new MenuBar();
+        Menu file = new Menu("File");
+        this.setMenuBar(mb);
+        mb.add(file);*/
+
+        setLayout(new XYLayout());
+        a = new IButton(Util.getImage("home.gif"),2);
+        a.addMouseListener(new MouseAction());
+
+        b = new IButton(Util.getImage("home.gif"), 2);
+        b.addMouseListener(new MouseAction());
+        c = new IButton(Util.getImage("home.gif"), 2);
+        c.addMouseListener(new MouseAction());
+        list = new List(4, false);
+        list.addActionListener(new WhoisAction());
+        list.addItemListener(new PrivateAction());
+
+        ta = new TextArea("", 2, 2, TextArea.SCROLLBARS_VERTICAL_ONLY);
+        ta.setEditable(false);
+        tf = new TextField(10);
+        //register an event for tf, so that it will responds to certain
+        //key pressed by user ("enter", "up-arrow", and "down-arrow");
+        tf.addKeyListener(new KeyAdapter() {
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode()==e.VK_ENTER) {
+                    send(tf.getText());
+                }
+                if (e.getKeyCode()==e.VK_UP) {
+                    try {
+                        tf.setText(history[--index]);
+                    } catch (Exception er) {}
+                }
+                if (e.getKeyCode()==e.VK_DOWN) {
+                    try {
+                        tf.setText(history[index++]);
+                    } catch (Exception er) {}
+                }
+            }
+        });
+
+        checkProperty();
+
+        Image im = Util.getImage("taL.jpg"),
+              imm= Util.getImage("tfL.jpg");
+        Util.waitForImage(this, im); Util.waitForImage(this, imm);
+        Label taL = new Label("History"),
+               tfL = new Label("Message");
+        Label  lL  = new Label("On-line users");
+
+        //=====
+        //add every thing to the frame
+        //=====
+        add("30,20,50,20", taL);
+        add("30,50,340,120",ta);
+        add("30,182,50,20",tfL);
+        add("90,182,140,20",tf);
+        add("30,218,45,45", a);
+        add("105,218,45,45",b);
+        add("182,218,45,45",c);
+        add("250,182,80,20", lL);
+        add("250,210,130,60",list);
+
+        //create a new image object, then wait until it's completely
+        //loaded in memory
+        image = Util.getImage("05.jpg");
+        Util.waitForImage(this, image);
+
+        //resize the window
+        setSize(400,320);
+
+        //make it closeable
+        addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent e) {
+                //don't just quit, but we have to inform the server that
+                //we're leaving.
+                quit();
+            }
+        });
+
+        //make the window appears at the center of the screen
+        setLocation((Util.getScrnWidth()-400)/2,(Util.getScrnHeight()-320)/2);
+        //don't allow user to resize the window
+        setResizable(false);
+        show();
+
+        //=========
+        //Create a middle man that will take care of every server-client trafic
+        //=========
+        mps = ps;//new PrintStream(ps);
+        new Connector(s, this).start();
+        connected = true;
+    }
+
+    //==============
+    //The text appeared in the text field under motif is not readable
+    //because it's too big, but everything is fine under win95.  Therefore
+    //I have to check the property in which this program is running, if it's
+    //running under Solaris, then decrease the font size from 12 to 10
+    //==============
+    private void checkProperty() {
+        String system = System.getProperty("os.name");
+        if (system.equals("Windows 95")) {
+            ta.setFont(new Font("TimesRoman", Font.BOLD, 14));
+            list.setForeground(Color.red);
+            list.setFont(new Font("Courier", Font.BOLD+Font.ITALIC, 14));
+        } else if (system.equals("Solaris")) {
+            tf.setFont(new Font("TimesRoman", Font.PLAIN, 10));
+        }
+
+    }
+
+    //might not be needed...if needed this inner class is for handling
+    //event dispatched by the three buttons
+    private class MouseAction extends MouseAdapter {
+        public void mouseClicked(MouseEvent e) {
+            if (e.getComponent().equals(a)) {
+                ta.append("Event dispatched from a\n");
+            }
+            if (e.getComponent().equals(b)) {
+                ta.append("Event dispatched from b\n");
+            }
+            if (e.getComponent().equals(c)) {
+                ta.append("Event dispatched from c\n");
+            }
+        }
+    }
+
+    //========
+    //Listener for Action event when user double clicked on the list.
+    //It will get the information of the selected user and display it on the
+    //text area.  Note that this information is private, which means that
+    //only the user that requested the "whois" command will receive the
+    //information
+    //========
+    private class WhoisAction implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            ////System.out.println("Double clicked");
+            mps.println("whois|"+list.getSelectedItem());
+        }
+    }
+
+    //========
+    //Listener for ItemEvent when user click on the list.
+    //Since Java doesn't select and deselect
+    //item on the list automatically every time user click on that item,
+    //I have to use a boolean value to toggle them.
+    //If an item (user) is selected, then the user is in private mode, and
+    //every text typed will be sent only to the selected user.
+    //========
+    private class PrivateAction implements ItemListener {
+        public void itemStateChanged(ItemEvent e) {
+            if (selected) {
+                int index = list.getSelectedIndex();
+                list.deselect(index);
+            }
+            selected = !selected;
+            ////System.out.println("Selected: "+selected);
+        }
+    }
+
+    //draw an image for window's background
+    public void paint(Graphics g) {
+        g.drawImage(image, 0, 0, 400, 320, this);
+    }
+
+    //==============
+    // Instance variables
+    //==============
+    IButton a, b, c;
+    TextArea ta;
+    TextField tf;
+    List list;
+    boolean selected = false;
+    String[] history = new String[256];
+    int index = 0;
+    String mode;
+    Image image;
+    PrintStream mps;
+    boolean connected=false;
+    Warning warning;
+
+    //==============
+    //Parse the strings sent by server via Connector
+    //==============
+    public void parseCommand(String text) {
+        ////System.out.println(text+" in ChatClient");
+        StringTokenizer st = new StringTokenizer(text, "|");
+        try {
+            //get the first token of the string (which is the command)
+            String cmd = st.nextToken();
+            //decide the action...
+            if (cmd.equals("chat")) updateTextArea(st);
+            else if (cmd.equals("list")) updateList(st);
+            else if (cmd.equals("BYE")) quit();
+            ////System.out.println("parseCmd called");
+        } catch (Exception er) {
+            System.err.println(er+" in parseCommand");
+        }
+    }
+
+    //===============
+    //Update the list according to the command passed by server,
+    //if "+" then add user to list, if "-" remove the user from list
+    //===============
+    public void updateList(StringTokenizer st) {
+        //get the command (+ or -)
+        String cmd = st.nextToken();
+        //get the user name
+        String user= st.nextToken();
+        //decide what to do...
+        if (cmd.equals("+")) list.add(user);
+        else if (cmd.equals("-")) list.remove(user);
+    }
+
+    //================
+    //self explanatory
+    //================
+    public void updateTextArea(StringTokenizer st) {
+        //Since the strings might contains several tokens
+        //we need to make sure that all of them is appended to TextArea
+        while (st.hasMoreTokens()) {
+            ta.append(st.nextToken()+"\n");
+        }
+    }
+
+    //================
+    //Send text to server, and clear the textfield
+    //================
+    public void send(String text) {
+        try {
+            //This will allow the "history" on textfields
+            history[index++]=text;
+        } catch (ArrayIndexOutOfBoundsException er) {
+            //erase all the history, and starts from index 0
+            index = 0;
+        }
+        //Check whether there is a selected username on the list.
+        //If there is then send private message to that user
+        //otherwise send the message to public
+        if (selected) {
+            mps.println("private|"+list.getSelectedItem()+"|"+text);
+        } else {
+            mps.println("chat|"+text);
+        }
+        //don't forget to clear the text field
+        tf.setText("");
+    }
+
+    //==========
+    //Tell server user's quit, then exit the system
+    //==========
+    void quit() {
+        mps.println("BYE");
+        System.exit(0);
+    }
+
+}
+
+

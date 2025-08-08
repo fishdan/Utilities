@@ -22,6 +22,12 @@
             <version>4.0.0-rc3</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.jsoup</groupId>
+            <artifactId>jsoup</artifactId>
+            <version>1.16.1</version>
+        </dependency>
+
 
     </dependencies>
 
