@@ -23,7 +23,9 @@ https://en.wikipedia.org/wiki/Albert_Einstein
 3. Type `wikisearch` as the URL (no `http://` needed).
 4. Save and publish—WikiSearch will automatically convert it to a working Wikipedia link.
 
-![Screenshot showing link dialog with wikisearch entered](screenshot.png)
+```html
+<div style="position: relative; padding-bottom: 56.25%; height: 0;"><iframe src="https://www.loom.com/embed/12c90919d9bb4e2c84255c69624da187?sid=4ad5d344-4d1c-4c98-aede-71f3e0bd043f" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
+```
 
 ## How it works (current behavior)
 
@@ -134,3 +136,4 @@ Yes—modify the code to set `target="_blank"` and `rel="noopener noreferrer"` w
 ## License
 
 MIT
+
