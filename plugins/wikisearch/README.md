@@ -1,140 +1,106 @@
-# WikiSearch for WordPress
+# WikiSearch Plugin
 
-Turn simple links into instant Wikipedia lookups on your site.
+[![Version](https://img.shields.io/badge/version-0.1-blue.svg)](#)
+[![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
+[![WordPress](https://img.shields.io/badge/WordPress-%5E6.0-blue)](https://wordpress.org/)
+[![Download](https://img.shields.io/github/v/release/fishdan/Utilities?display_name=tag\&sort=semver)](https://github.com/fishdan/Utilities/releases/latest)
 
-## What it does
+<!-- ↑ Update the repo owner/name in the Download badge if this lives in a different repo. -->
 
-WikiSearch scans page content for links whose `href` contains the string `wikisearch` and converts them into clickable elements that take the visitor to the corresponding Wikipedia article. For example, a link like:
+One‑step Wikipedia linking for WordPress: highlight text, set the link URL to `wikisearch`, publish.
 
-```html
-<a href="wikisearch">Albert Einstein</a>
-```
+---
 
-will become a clickable element that navigates to:
+## ✨ Features
 
-```
-https://en.wikipedia.org/wiki/Albert_Einstein
-```
+* **Gutenberg-friendly**: link any text with the URL `wikisearch` and it becomes a Wikipedia link based on the visible text
+* **Zero config**: no settings required
+* **Lightweight**: tiny JS + CSS, no external calls until a user clicks
+* **Theme‑friendly styles** via `.wiki-search`
+* Skips links that contain `github` in their `href`
 
-## Easiest way to use it (Gutenberg editor)
+---
 
-1. In the WordPress editor, **highlight the text** you want linked to Wikipedia.
-2. Click the **link button** in the toolbar.
-3. Type `wikisearch` as the URL (no `http://` needed).
-4. Save and publish—WikiSearch will automatically convert it to a working Wikipedia link.
+## 🎥 Demo
 
-## Demo
 [![WikiSearch demo](https://cdn.loom.com/sessions/thumbnails/12c90919d9bb4e2c84255c69624da187-a0e3e82ed5f25cee-full-play.gif)](https://www.loom.com/share/12c90919d9bb4e2c84255c69624da187)
 
+---
 
-## How it works (current behavior)
+## 📦 Installation
 
-* **Front‑end script** runs after `DOMContentLoaded`, finds `a[href*="wikisearch"]`, builds a Wikipedia URL from the link text, and replaces the `<a>` with a `<span>` that redirects on click.cite22†wikisearch.css23†wikisearch.js
-* **Styling** provides a traditional “link blue” color, underline, hover state, and pointer cursor.
+1. Copy the `wikisearch` folder into your WordPress `wp-content/plugins` directory **or** upload the ZIP via **Plugins → Add New → Upload Plugin**.
+2. Activate **WikiSearch** under **Plugins → Installed Plugins**.
 
-> ⚠️ Accessibility note: replacing semantic `<a>` links with `<span>` removes keyboard focus/Tab support and ARIA semantics. See the **Roadmap** for improvements.
+*(If zipping on Windows, prefer `git archive` or `tar -a -c -f wikisearch.zip wikisearch` so archive paths use forward slashes.)*
 
-## Installation
+---
 
-1. Upload the plugin folder to `/wp-content/plugins/` (or install via the WordPress admin).
-2. Activate **WikiSearch** from **Plugins → Installed Plugins**.
-3. Ensure the plugin enqueues its JavaScript and CSS on the front‑end.
+## 🚀 Usage
 
-## Usage examples
+### Easiest (Gutenberg)
 
-**Simplest**
+1. Highlight the text you want to link (e.g., `Albert Einstein`).
+2. Click the **Link** button in the block toolbar.
+3. Type `wikisearch` as the URL (no `http://`).
+4. Publish. On the front‑end, the link will go to `https://en.wikipedia.org/wiki/Albert_Einstein`.
+
+### Classic editor / raw HTML
 
 ```html
 <a href="wikisearch">Marie Curie</a>
 ```
 
-**With display text different from the article slug**
+This will point to:
 
-```html
-<a href="wikisearch">C. elegans</a>
-<!-- goes to https://en.wikipedia.org/wiki/C._elegans -->
+```
+https://en.wikipedia.org/wiki/Marie_Curie
 ```
 
-**Multiple on a page**
+### Multiple on a page
 
 ```html
 <p>Read about <a href="wikisearch">Alan Turing</a> and <a href="wikisearch">Ada Lovelace</a>.</p>
 ```
 
-## Customization (developer tips)
+---
 
-* **Styling**: override the `.wiki-search` rules in your theme/child theme.
-* **Behavior**: fork the front‑end JS to change selection logic (e.g., only convert links with class `.wikisearch` or with a `data-wikisearch` attribute).
-* **Language**: modify the base host from `en.wikipedia.org` to another Wikipedia language subdomain.
+## ⚙️ Customization (developer tips)
 
-## Roadmap / Suggested improvements
+* **Styling**: override the `.wiki-search` rules in your theme or child theme.
+* **Language**: swap `en.wikipedia.org` for another language subdomain in the JS (future admin setting planned).
+* **Open in new tab**: set `target="_blank" rel="noopener"` when converting links (see roadmap).
 
-These are recommendations for the next versions to improve UX, accessibility, and WordPress‑friendliness.
+---
 
-1. **Keep `<a>` semantics instead of replacing with `<span>`**
+## 🛣️ Roadmap / Planned improvements
 
-    * Convert placeholder links into real anchors with `href` set to the computed Wikipedia URL.
-    * Benefits: keyboard access, screen readers, SEO, and no‑JS fallback.
+* Keep **anchor semantics** (convert placeholders to real `<a href>` instead of replacing with `<span>`) for better accessibility and no‑JS fallback
+* **Safer selector** (opt‑in via class `a.wikisearch` or attribute `[data-wikisearch]`)
+* **Admin setting** for Wikipedia language and target behavior
+* **Shortcode + Gutenberg block** for explicit inserts
+* Conditional asset enqueue and basic tests/linting
 
-2. **Safer selector**
+---
 
-    * Replace the broad selector `a[href*="wikisearch"]` with one of:
+## ❓ FAQ
 
-        * `a[href^="wikisearch"]` (hash‑only placeholder), or
-        * `a.wikisearch` (class‑based opt‑in), or
-        * `[data-wikisearch]` (attribute‑driven), using `data-wikisearch="Albert Einstein"`.
+**Why isn’t my GitHub link changing?**
 
-3. **Keyboard accessibility** (if `<span>` is kept temporarily)
+Links whose `href` contains `github` are intentionally skipped so developer docs aren’t altered.
 
-    * Add `role="link"`, `tabindex="0"`, and activate on `Enter`/`Space` key.
+**Can I force a different article slug than the visible text?**
 
-4. **Language setting in WP Admin**
+For now the plugin uses the visible text. A shortcode and/or attribute‑based selector is planned for custom slugs.
 
-    * Add a Settings page to choose the Wikipedia language (e.g., `en`, `es`, `he`) and whether to open in a new tab.
-    * Pass settings to JS with `wp_localize_script`.
+---
 
-5. **No‑JS fallback**
+## 🧾 Changelog
 
-    * During render (filter `the_content` or shortcodes), compute the final `href` server‑side so links work without JavaScript.
+* **0.1.0** – Initial release.
 
-6. **Shortcode and Gutenberg block**
+---
 
-    * Shortcode: `[wikisearch term="Albert Einstein" text="Einstein" lang="en"]`
-    * Optional simple block for editors who prefer visual insertion.
+## 📝 License
 
-7. **Security & performance**
-
-    * Only enqueue assets on the front‑end and only on posts/pages that actually contain WikiSearch elements (conditional enqueue).
-    * Use versioned enqueues to bust caches when scripts change.
-
-8. **Internationalization & i18n**
-
-    * Make all admin strings translatable. Support different Wikipedia subdomains per site locale.
-
-9. **Unit tests / linting**
-
-    * Add basic Jest tests for URL generation and selector behavior. Add ESLint configuration.
-
-10. **Documentation**
-
-* Include examples, FAQs (“Why did my link change?”, “How do I target French Wikipedia?”), and a changelog.
-
-## FAQ
-
-**Why is my GitHub link untouched?**
-
-The current implementation intentionally skips links whose `href` contains `github` so developer documentation links are not altered.
-
-**Can I make it open in a new tab?**
-
-Yes—modify the code to set `target="_blank"` and `rel="noopener noreferrer"` when converting to anchors.
-
-## Changelog
-
-* **0.1.0** – First public release.
-
-## License
-
-MIT
-
-
+MIT. See `LICENSE` for details.
