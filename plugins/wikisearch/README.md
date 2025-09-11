@@ -3,7 +3,7 @@
 [![Version](https://img.shields.io/badge/version-0.1-blue.svg)](#)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![WordPress](https://img.shields.io/badge/WordPress-%5E6.0-blue)](https://wordpress.org/)
-[![Download](https://img.shields.io/github/v/release/fishdan/Utilities?display_name=tag\&sort=semver)](https://github.com/fishdan/Utilities/dist/wikisearch.zip)
+[![Download](https://img.shields.io/github/v/release/fishdan/Utilities?display_name=tag\&sort=semver)](https://github.com/fishdan/Utilities/blob/main/plugins/dist/wikisearch.zip)
 
 <!-- ↑ Update the repo owner/name in the Download badge if this lives in a different repo. -->
 
@@ -104,4 +104,6 @@ For now the plugin uses the visible text. A shortcode and/or attribute‑based s
 ## 📝 License
 
 MIT. See `LICENSE` for details.
+
+
 
