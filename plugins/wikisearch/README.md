@@ -133,4 +133,4 @@ Yes—modify the code to set `target="_blank"` and `rel="noopener noreferrer"` w
 
 ## License
 
-MIT 
+MIT
