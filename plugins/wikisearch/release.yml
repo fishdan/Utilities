@@ -1,0 +1,51 @@
+name: release
+
+on:
+  push:
+    tags:
+      - 'v*'          # e.g. v0.1.0, v1.2.3
+  workflow_dispatch:   # allow manual runs
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Derive tag + zip name
+        run: |
+          echo "TAG=${GITHUB_REF_NAME}" >> $GITHUB_ENV
+          echo "ZIP_NAME=wikisearch-${GITHUB_REF_NAME}.zip" >> $GITHUB_ENV
+
+      # Optional: sanity check the plugin header exists
+      - name: Verify plugin header
+        run: |
+          test -f wikisearch.php
+          grep -q "Plugin Name:.*WikiSearch" wikisearch.php
+
+      # Build a ZIP with FORWARD SLASHES using git archive.
+      # This packages the WHOLE repo with a top-level 'wikisearch/' folder.
+      # Ensure your plugin files live at repo root alongside wikisearch.php.
+      - name: Build plugin ZIP (POSIX paths)
+        run: |
+          git archive --format=zip --output "$ZIP_NAME" --prefix=wikisearch/ "$GITHUB_SHA"
+
+      # If your plugin lives in a subfolder of a monorepo, use this instead:
+      # - name: Build plugin ZIP from subfolder
+      #   run: |
+      #     git archive --format=zip --output "$ZIP_NAME" --prefix=wikisearch/ "$GITHUB_SHA":"plugins/wikisearch"
+
+      # Publish the Release and upload the zip
+      - name: Publish GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ env.TAG }}
+          files: ${{ env.ZIP_NAME }}
+          generate_release_notes: true
