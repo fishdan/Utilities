@@ -1,0 +1,55 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Subscribed Toolbar – Options</title>
+  <style>
+    body { font: 14px system-ui, -apple-system, Segoe UI, Roboto, sans-serif; padding: 16px; max-width: 720px; }
+    label { display:block; margin-top:12px; font-weight:600; }
+    input[type="text"], input[type="number"] { width:100%; padding:8px; box-sizing:border-box; }
+    .row { display:flex; gap:12px; align-items:end; }
+    .row > div { flex:1; }
+    button { padding:8px 12px; border-radius:8px; border:1px solid #ccc; cursor:pointer; }
+    .muted { color:#666; margin-top:6px; }
+    label.choice-label { display:flex; align-items:center; gap:8px; font-weight:500; margin-top:8px; }
+  </style>
+</head>
+<body>
+  <h1>Subscribed Toolbar</h1>
+  <p>Mirror a remote bookmarks feed into a folder on your bookmarks bar.</p>
+
+  <label>Feed URL</label>
+  <input id="feedUrl" type="text" placeholder="https://example.com/bookmarks.json"/>
+
+  <div class="row">
+    <div>
+      <label>Target Folder Name</label>
+      <input id="folderName" type="text" placeholder="Subscribed Toolbar"/>
+    </div>
+    <div style="max-width:180px">
+      <label>Sync Every (minutes)</label>
+      <input id="intervalMinutes" type="number" min="1" step="1" />
+    </div>
+  </div>
+
+  <label>Sync Mode</label>
+  <label class="choice-label">
+    <input id="syncModeAdd" name="syncMode" type="radio" value="add_only" checked />
+    <span>Add-only (keep existing items, add missing ones)</span>
+  </label>
+  <label class="choice-label">
+    <input id="syncModeFull" name="syncMode" type="radio" value="full_sync" />
+    <span>Full sync (replace folder contents)</span>
+  </label>
+  <div class="muted">Full sync removes any manual changes or extra items in the target folder.</div>
+
+  <div style="margin-top:16px; display:flex; gap:8px;">
+    <button id="saveBtn">Save</button>
+    <button id="syncBtn">Sync now</button>
+  </div>
+
+  <div id="status" class="muted"></div>
+
+  <script src="options.js"></script>
+</body>
+</html>
