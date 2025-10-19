@@ -3,8 +3,9 @@
   "name": "Dynamic Toolbar",
   "version": "0.1.0",
   "description": "Mirror a remote bookmarks feed into a toolbar folder that stays in sync.",
-  "permissions": ["bookmarks", "storage", "alarms"],
+  "permissions": ["bookmarks", "storage", "alarms", "permissions"],
   "host_permissions": ["https://example.com/*"],
+  "optional_host_permissions": ["*://*/*"],
   "background": { "service_worker": "service-worker.js" },
   "options_page": "options.html",
   "icons": {

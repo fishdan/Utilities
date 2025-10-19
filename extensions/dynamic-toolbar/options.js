@@ -16,14 +16,44 @@ async function load() {
   document.querySelector('input[name="syncMode"][value="full_sync"]').checked = !!cfg.destructiveSync;
 }
 
+async function ensureFeedPermission(feedUrl) {
+  let parsed;
+  try {
+    parsed = new URL(feedUrl);
+  } catch (_err) {
+    throw new Error('Feed URL must be a valid https:// address.');
+  }
+  if (parsed.protocol !== 'https:') {
+    throw new Error('Feed URL must use https://');
+  }
+  const originPattern = `${parsed.protocol}//${parsed.host}/*`;
+  const hasPermission = await chrome.permissions.contains({ origins: [originPattern] });
+  if (hasPermission) return;
+  const granted = await chrome.permissions.request({ origins: [originPattern] });
+  if (!granted) {
+    throw new Error(`Access to ${parsed.origin} was not granted. Feed not saved.`);
+  }
+}
+
 async function save() {
   const syncMode = document.querySelector('input[name="syncMode"]:checked')?.value || 'add_only';
+  const feedUrl = document.getElementById('feedUrl').value.trim();
+  if (!feedUrl) {
+    setStatus('Feed URL is required.');
+    return;
+  }
   const payload = {
-    feedUrl: document.getElementById('feedUrl').value.trim(),
+    feedUrl,
     folderName: document.getElementById('folderName').value.trim() || DEFAULTS.folderName,
     intervalMinutes: Math.max(1, Number(document.getElementById('intervalMinutes').value) || DEFAULTS.intervalMinutes),
     destructiveSync: syncMode === 'full_sync'
   };
+  try {
+    await ensureFeedPermission(payload.feedUrl);
+  } catch (err) {
+    setStatus(err.message);
+    return;
+  }
   await chrome.runtime.sendMessage({ type: 'SAVE_SETTINGS', payload });
   setStatus('Saved. Schedule updated.');
 }

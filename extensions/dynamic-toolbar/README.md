@@ -23,6 +23,7 @@ Open the extension options via **Details → Extension options**:
 - **Sync Mode** – Choose add-only (preserves existing items) or full sync (recreates the folder).
 
 Saving updates the schedule immediately. Use **Sync now** for an immediate refresh.
+On first save of a new feed domain, Chrome will prompt for permission so the extension can download the feed.
 
 ## Feed Format
 The feed must be a JSON object with a `children` array describing bookmark and folder nodes.
