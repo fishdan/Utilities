@@ -76,15 +76,21 @@ function validateFeed(feed) {
     if (typeof n.title !== 'string' || !n.title.trim()) {
       throw new Error(`Missing/empty title at ${path}`);
     }
-    const isLink = 'url' in n;
-    const isFolder = 'children' in n;
-    if (isLink === isFolder) throw new Error(`Node must be link OR folder at ${path}`);
+    if ('children' in n && !Array.isArray(n.children)) {
+      throw new Error(`children must be an array at ${path}`);
+    }
+    const hasChildren = Array.isArray(n.children);
+    const nodeUrl = getNodeUrl(n);
+    const isLink = !hasChildren && !!nodeUrl;
+    if (!isLink && !hasChildren) {
+      throw new Error(`Node must include children[] or value/url at ${path}`);
+    }
     if (isLink) {
-      if (typeof n.url !== 'string' || !/^https?:\/\//i.test(n.url)) {
+      if (!/^https?:\/\//i.test(nodeUrl)) {
         throw new Error(`Bad url at ${path}`);
       }
-    } else {
-      if (!Array.isArray(n.children)) throw new Error(`children[] must be array at ${path}`);
+    }
+    if (hasChildren) {
       n.children.forEach((c, i) => validateNode(c, `${path}/${n.title}[${i}]`));
     }
   };
@@ -126,8 +132,9 @@ async function clearFolder(folderId) {
 
 async function createFromModel(parentId, nodes) {
   for (const node of nodes) {
-    if ('url' in node) {
-      await chrome.bookmarks.create({ parentId, title: node.title, url: node.url });
+    const nodeUrl = getNodeUrl(node);
+    if (nodeUrl) {
+      await chrome.bookmarks.create({ parentId, title: node.title, url: nodeUrl });
       await sleep(10);
     } else {
       const folder = await chrome.bookmarks.create({ parentId, title: node.title });
@@ -159,8 +166,9 @@ async function reconcile(parentId, desiredNodes) {
     let existing = (await chrome.bookmarks.getChildren(parentId)).find(c => keyOfChromeNode(c) === key);
 
     if (!existing) {
-      if ('url' in dn) {
-        existing = await chrome.bookmarks.create({ parentId, title: dn.title, url: dn.url, index });
+      const nodeUrl = getNodeUrl(dn);
+      if (nodeUrl) {
+        existing = await chrome.bookmarks.create({ parentId, title: dn.title, url: nodeUrl, index });
         await sleep(10);
       } else {
         existing = await chrome.bookmarks.create({ parentId, title: dn.title, index });
@@ -173,22 +181,33 @@ async function reconcile(parentId, desiredNodes) {
         await chrome.bookmarks.move(existing.id, { parentId, index });
         await sleep(5);
       }
-      if ('url' in dn && existing.url !== dn.url) {
-        await chrome.bookmarks.update(existing.id, { title: dn.title, url: dn.url });
-      } else if (!('url' in dn) && existing.title !== dn.title) {
+      const nodeUrl = getNodeUrl(dn);
+      if (nodeUrl && existing.url !== nodeUrl) {
+        await chrome.bookmarks.update(existing.id, { title: dn.title, url: nodeUrl });
+      } else if (!nodeUrl && existing.title !== dn.title) {
         await chrome.bookmarks.update(existing.id, { title: dn.title });
       }
-      if (!('url' in dn)) await reconcile(existing.id, dn.children);
+      if (!nodeUrl) await reconcile(existing.id, dn.children);
     }
     index++;
   }
 }
 
 function keyOfNode(n) {
-  return 'url' in n ? `L|${n.title}|${n.url}` : `F|${n.title}`;
+  const nodeUrl = getNodeUrl(n);
+  return nodeUrl ? `L|${n.title}|${nodeUrl}` : `F|${n.title}`;
 }
 function keyOfChromeNode(n) {
   return n.url ? `L|${n.title}|${n.url}` : `F|${n.title}`;
+}
+function getNodeUrl(node) {
+  if (!node || typeof node !== 'object') return null;
+  const raw = typeof node.url === 'string' && node.url.trim()
+    ? node.url.trim()
+    : typeof node.value === 'string'
+      ? node.value.trim()
+      : '';
+  return raw || null;
 }
 const sleep = (ms) => new Promise(r => setTimeout(r, ms));
 

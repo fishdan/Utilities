@@ -29,12 +29,13 @@ The feed must be a JSON object with a `children` array describing bookmark and f
 
 ```json
 {
+  "title": "Subscribed Toolbar",
   "children": [
-    { "title": "Codex Docs", "url": "https://platform.openai.com/docs" },
+    { "title": "Codex Docs", "value": "https://platform.openai.com/docs" },
     {
       "title": "Tools",
       "children": [
-        { "title": "GitHub", "url": "https://github.com" }
+        { "title": "GitHub", "value": "https://github.com" }
       ]
     }
   ]
@@ -43,7 +44,7 @@ The feed must be a JSON object with a `children` array describing bookmark and f
 
 Rules:
 - Each node needs a non-empty `title`.
-- Bookmark nodes include a valid `url` field (HTTPS recommended).
+- Bookmark nodes include a valid `value` (or legacy `url`) field with an HTTPS address.
 - Folder nodes include a `children` array with nested nodes.
 
 ## Notes
