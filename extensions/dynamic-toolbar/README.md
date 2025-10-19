@@ -32,7 +32,7 @@ The feed must be a JSON object with a `children` array describing bookmark and f
 {
   "title": "Subscribed Toolbar",
   "children": [
-    { "title": "Codex Docs", "value": "https://platform.openai.com/docs" },
+    { "title": "Daniel Fishman", "value": "https://www.fishdan.com" },
     {
       "title": "Tools",
       "children": [
