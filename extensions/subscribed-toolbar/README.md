@@ -1,6 +1,6 @@
-# Dynamic Toolbar Extension
+# Subscribed Toolbar Extension
 
-Dynamic Toolbar mirrors a remote bookmarks feed into a dedicated folder on your bookmarks bar, keeping the folder updated on a recurring schedule.
+Subscribed Toolbar mirrors a remote bookmarks feed into a dedicated folder on your bookmarks bar, keeping the folder updated on a recurring schedule.
 
 ## Features
 - Synchronises a JSON feed of bookmarks into a chosen toolbar folder.

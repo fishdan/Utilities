@@ -1,8 +1,8 @@
-# Dynamic Toolbar Privacy Policy
+# Subscribed Toolbar Privacy Policy
 
 _Last updated: 2025-10-19_
 
-Dynamic Toolbar is a Chrome extension developed by Daniel Fishman. The extension mirrors a user-provided bookmarks feed into a folder on the browser’s bookmarks bar. This policy describes the data the extension accesses, how that data is used, and the choices available to you.
+Subscribed Toolbar is a Chrome extension developed by Daniel Fishman. The extension mirrors a user-provided bookmarks feed into a folder on the browser’s bookmarks bar. This policy describes the data the extension accesses, how that data is used, and the choices available to you.
 
 ## Data We Access and Store
 
@@ -32,7 +32,7 @@ Uninstalling the extension removes its settings and stops all background activit
 
 ## Security
 
-Dynamic Toolbar relies on Chrome’s extension platform security mechanisms, including the permissions model and secure storage. The extension does not implement additional data transmission or storage beyond what is described here.
+Subscribed Toolbar relies on Chrome’s extension platform security mechanisms, including the permissions model and secure storage. The extension does not implement additional data transmission or storage beyond what is described here.
 
 ## Changes to This Policy
 
