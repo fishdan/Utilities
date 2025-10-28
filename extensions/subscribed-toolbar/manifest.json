@@ -1,11 +1,11 @@
-git {
+{
   "manifest_version": 3,
   "name": "Subscribed Toolbar",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "author": "Daniel Fishman",
   "description": "Mirror a remote bookmarks feed into a toolbar folder that stays in sync.",
   "permissions": ["bookmarks", "storage", "alarms"],
-  "host_permissions": ["https://example.com/*"],
+  "host_permissions": ["http://localhost/*", "http://127.0.0.1/*", "http://[::1]/*"],
   "optional_host_permissions": ["*://*/*"],
   "background": { "service_worker": "service-worker.js" },
   "options_page": "options.html",

@@ -1,7 +1,8 @@
 // -- Settings keys & defaults
 const SETTINGS_KEY = 'subscribedToolbar.settings';
+const DEFAULT_FEED_URL = chrome.runtime.getURL('dev-feed/bookmarks.json');
 const DEFAULT_SETTINGS = {
-  feedUrl: 'https://example.com/bookmarks.json',
+  feedUrl: DEFAULT_FEED_URL,
   folderName: 'Subscribed Toolbar',
   intervalMinutes: 15,
   destructiveSync: false // false: add-only, true: replace folder contents each sync
@@ -202,6 +203,7 @@ function keyOfChromeNode(n) {
 }
 function getNodeUrl(node) {
   if (!node || typeof node !== 'object') return null;
+  if (Array.isArray(node.children)) return null; // folders take precedence even if a value/url exists
   const raw = typeof node.url === 'string' && node.url.trim()
     ? node.url.trim()
     : typeof node.value === 'string'

@@ -1,0 +1,22 @@
+{
+  "title": "Subscribed Toolbar Sample",
+  "children": [
+    {
+      "title": "Subscribed Toolbar Home",
+      "value": "https://github.com/dfishman/Utilities/tree/main/extensions/subscribed-toolbar"
+    },
+    {
+      "title": "Example Links",
+      "children": [
+        {
+          "title": "Chromium Extensions Docs",
+          "value": "https://developer.chrome.com/docs/extensions/"
+        },
+        {
+          "title": "MDN Web Docs",
+          "value": "https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions"
+        }
+      ]
+    }
+  ]
+}

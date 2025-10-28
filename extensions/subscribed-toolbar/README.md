@@ -12,18 +12,21 @@ Subscribed Toolbar mirrors a remote bookmarks feed into a dedicated folder on yo
 1. Clone or copy this project onto your machine.
 2. Open `chrome://extensions` (or `brave://extensions`) in a Chromium-based browser.
 3. Enable **Developer mode**.
-4. Click **Load unpacked** and select the `extensions/dynamic-toolbar` directory.
+4. Click **Load unpacked** and select the `extensions/subscribed-toolbar` directory.
 5. Use **Reload** on the extension card after making local changes.
 
 ## Configuration
 Open the extension options via **Details → Extension options**:
-- **Feed URL** – HTTPS endpoint returning a JSON feed (see format below).
+- **Feed URL** – Defaults to the bundled sample feed (`dev-feed/bookmarks.json`). Replace with any HTTPS endpoint (or `http://localhost` during development) returning a JSON feed (see format below).
 - **Target Folder Name** – Folder created/updated inside the bookmarks bar.
 - **Sync Every (minutes)** – Refresh interval (minimum 1 minute).
 - **Sync Mode** – Choose add-only (preserves existing items) or full sync (recreates the folder).
 
 Saving updates the schedule immediately. Use **Sync now** for an immediate refresh.
 On first save of a new feed domain, Chrome will prompt for permission so the extension can download the feed.
+
+### Bundled sample feed
+The default Feed URL points to the packaged `dev-feed/bookmarks.json`, so the extension syncs immediately after loading without any additional setup. Edit the feed file or swap in your own URL when you are ready to test real data. The extension allows `http://localhost` feeds for development convenience while still requiring `https://` for other hosts.
 
 ## Feed Format
 The feed must be a JSON object with a `children` array describing bookmark and folder nodes.
