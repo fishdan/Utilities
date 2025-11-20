@@ -4,9 +4,16 @@
   "version": "0.1.6",
   "author": "Daniel Fishman",
   "description": "Mirror a remote bookmarks feed into a toolbar folder that stays in sync.",
-  "permissions": ["bookmarks", "storage", "alarms"],
+  "permissions": ["bookmarks", "storage", "alarms", "scripting"],
   "host_permissions": ["http://localhost/*", "http://127.0.0.1/*", "http://[::1]/*"],
   "optional_host_permissions": ["*://*/*"],
+  "externally_connectable": {
+    "matches": [
+      "http://localhost/*",
+      "http://127.0.0.1/*",
+      "http://[::1]/*"
+    ]
+  },
   "background": { "service_worker": "service-worker.js" },
   "options_page": "options.html",
   "icons": {

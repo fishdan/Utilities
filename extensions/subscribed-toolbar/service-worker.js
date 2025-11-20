@@ -8,6 +8,8 @@ const DEFAULT_SETTINGS = {
   destructiveSync: false // false: add-only, true: replace folder contents each sync
 };
 const ALARM_NAME = 'subscribed-toolbar-sync';
+const CONTENT_SCRIPT_ID = 'subscribed-toolbar-export';
+const CONTENT_SCRIPT_FILES = ['content-export.js'];
 
 // ---- Utilities
 async function getSettings() {
@@ -201,6 +203,29 @@ function keyOfNode(n) {
 function keyOfChromeNode(n) {
   return n.url ? `L|${n.title}|${n.url}` : `F|${n.title}`;
 }
+
+async function exportFolderToModel(folderId) {
+  const children = await chrome.bookmarks.getChildren(folderId);
+  const model = [];
+  for (const c of children) {
+    if (c.url) {
+      model.push({ title: c.title || '', value: c.url });
+    } else {
+      model.push({ title: c.title || '', children: await exportFolderToModel(c.id) });
+    }
+  }
+  return model;
+}
+
+async function exportSubscribedFolder() {
+  const settings = await getSettings();
+  const toolbarId = await getToolbarFolderId();
+  const targetFolderId = await ensureFolder(toolbarId, settings.folderName);
+  return {
+    title: settings.folderName,
+    children: await exportFolderToModel(targetFolderId)
+  };
+}
 function getNodeUrl(node) {
   if (!node || typeof node !== 'object') return null;
   if (Array.isArray(node.children)) return null; // folders take precedence even if a value/url exists
@@ -213,11 +238,44 @@ function getNodeUrl(node) {
 }
 const sleep = (ms) => new Promise(r => setTimeout(r, ms));
 
+function originPatternFromUrl(url) {
+  try {
+    const u = new URL(url);
+    if (u.protocol !== 'http:' && u.protocol !== 'https:') return null;
+    return `${u.protocol}//${u.host}/*`;
+  } catch (_e) {
+    return null;
+  }
+}
+
+async function refreshContentScriptForFeed(feedUrl) {
+  const pattern = originPatternFromUrl(feedUrl);
+  try {
+    await chrome.scripting.unregisterContentScripts({ ids: [CONTENT_SCRIPT_ID] });
+  } catch (_e) {
+    // ignore if not previously registered
+  }
+  if (!pattern) return;
+  const hasPermission = await chrome.permissions.contains({ origins: [pattern] });
+  if (!hasPermission) return;
+  try {
+    await chrome.scripting.registerContentScripts([{
+      id: CONTENT_SCRIPT_ID,
+      js: CONTENT_SCRIPT_FILES,
+      matches: [pattern],
+      runAt: 'document_start'
+    }]);
+  } catch (e) {
+    console.warn('Content script registration failed:', e.message);
+  }
+}
+
 // ---- Lifecycle & events
 chrome.runtime.onInstalled.addListener(async () => {
   // Initialize settings/alarms and run a first sync
   const s = await getSettings();
   await saveSettings(s);
+  await refreshContentScriptForFeed(s.feedUrl);
   try { await syncNow(); } catch (e) { console.warn('Initial sync failed:', e.message); }
 });
 
@@ -245,6 +303,37 @@ chrome.runtime.onMessage.addListener((msg, _sender, sendResponse) => {
       const merged = { ...(await getSettings()), ...(msg.payload || {}) };
       await saveSettings(merged);
       sendResponse({ ok: true });
+      await refreshContentScriptForFeed(merged.feedUrl);
+    } else if (msg?.type === 'EXPORT_SUBSCRIBED_FOLDER') {
+      try {
+        const feed = await exportSubscribedFolder();
+        sendResponse({ ok: true, feed, json: JSON.stringify(feed, null, 2) });
+      } catch (e) {
+        sendResponse({ ok: false, error: e.message });
+      }
+    }
+  })();
+  return true;
+});
+
+// Allow messages from web pages (via externally_connectable).
+chrome.runtime.onMessageExternal.addListener((msg, _sender, sendResponse) => {
+  (async () => {
+    if (msg?.type === 'EXPORT_SUBSCRIBED_FOLDER') {
+      console.debug('[Subscribed Toolbar] Received external EXPORT_SUBSCRIBED_FOLDER', {
+        sender: _sender?.origin || 'unknown',
+        id: _sender?.id
+      });
+      try {
+        const feed = await exportSubscribedFolder();
+        console.debug('[Subscribed Toolbar] Export success', { length: feed?.children?.length || 0 });
+        sendResponse({ ok: true, feed, json: JSON.stringify(feed, null, 2) });
+      } catch (e) {
+        console.error('[Subscribed Toolbar] Export failed', e);
+        sendResponse({ ok: false, error: e.message });
+      }
+    } else {
+      console.debug('[Subscribed Toolbar] Ignored external message', { type: msg?.type });
     }
   })();
   return true;
