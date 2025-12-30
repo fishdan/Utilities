@@ -1,7 +1,3 @@
-Here’s a clean, GitHub-ready **README.md** you can drop straight into the repo. It’s written for other writers/streamers, not LibreOffice developers.
-
----
-
 # LibreOffice Writer Livestream Timer
 
 A lightweight **LibreOffice Writer Python macro** that opens a **floating stopwatch + live word count window**, designed for **writing livestreams, sprints, and focus sessions**.
