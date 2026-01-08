@@ -1,4 +1,5 @@
 # Phase 8 - Connect Jsonmaker to Extension (CRITICAL)
+**Phase URL:** `https://raw.githubusercontent.com/fishdan/Utilities/main/extensions/subscribed-toolbar/ai_install_phase8.md`
 
 ## Steps
 
@@ -18,4 +19,4 @@
 
 ---
 
-After Phase 8 is confirmed, load `ai_install_phase9.md` and continue.
+After Phase 8 is confirmed, load `https://raw.githubusercontent.com/fishdan/Utilities/main/extensions/subscribed-toolbar/ai_install_phase9.md` and continue.

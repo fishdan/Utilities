@@ -1,4 +1,5 @@
 # Phase 11 - Partial Sharing via View Node
+**Phase URL:** `https://raw.githubusercontent.com/fishdan/Utilities/main/extensions/subscribed-toolbar/ai_install_phase11.md`
 
 ## Steps
 
@@ -13,4 +14,4 @@
 
 ---
 
-After Phase 11 is confirmed, load `ai_install_phase12.md` and continue.
+After Phase 11 is confirmed, load `https://raw.githubusercontent.com/fishdan/Utilities/main/extensions/subscribed-toolbar/ai_install_phase12.md` and continue.

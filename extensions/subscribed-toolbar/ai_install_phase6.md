@@ -1,4 +1,5 @@
 # Phase 6 - Create Jsonmaker Account
+**Phase URL:** `https://raw.githubusercontent.com/fishdan/Utilities/main/extensions/subscribed-toolbar/ai_install_phase6.md`
 
 ## Steps
 
@@ -12,4 +13,4 @@
 
 ---
 
-After Phase 6 is confirmed, load `ai_install_phase7.md` and continue.
+After Phase 6 is confirmed, load `https://raw.githubusercontent.com/fishdan/Utilities/main/extensions/subscribed-toolbar/ai_install_phase7.md` and continue.

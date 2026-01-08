@@ -1,4 +1,5 @@
 # Phase 7 - Import Toolbar into Jsonmaker
+**Phase URL:** `https://raw.githubusercontent.com/fishdan/Utilities/main/extensions/subscribed-toolbar/ai_install_phase7.md`
 
 ## Steps
 
@@ -13,4 +14,4 @@
 
 ---
 
-After Phase 7 is confirmed, load `ai_install_phase8.md` and continue.
+After Phase 7 is confirmed, load `https://raw.githubusercontent.com/fishdan/Utilities/main/extensions/subscribed-toolbar/ai_install_phase8.md` and continue.
