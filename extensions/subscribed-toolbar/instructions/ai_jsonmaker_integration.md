@@ -1,6 +1,6 @@
-# AI-Guided Installation Checklist — Personal Toolbar
+# AI-Guided Installation Checklist - Personal Toolbar
 
-**Filename:** `ai_install.md`  
+**Filename:** `ai_jsonmaker_integration.md`  
 **Purpose:** Authoritative, versioned, machine-followable installation checklist  
 **Audience:** AI assistants and human maintainers  
 **Scope:** Subscribed Toolbar + Jsonmaker system  
@@ -12,8 +12,6 @@ All steps are **imperative**, **order-dependent**, and **non-optional** unless e
 The user may have problems completing a phase. The assistant should help the user complete the **current phase only** and must not advance phases while troubleshooting.
 
 Once installation begins, the steps are **ATOMIC**.
-
-**IMPORTANT:** Jsonmaker MUST NOT be mentioned, described, or implied in any way before **Phase 6**.
 
 ---
 
@@ -51,139 +49,7 @@ Violation of this contract is an error.
 
 ---
 
-# Phase 1 — Install Extension (Includes Permission Notice)
-
-CURRENT PHASE: 1
-
-## Preconditions
-
-- User must be using a **Chromium-based browser**
-  - Supported: Chrome, Edge, Brave, Arc, Vivaldi
-  - Not supported: Safari, Firefox
-- If browser is not supported, STOP and explain that only Jsonmaker can be used without the extension.
-
-## Steps
-
-- Ensure the precondition.
-- Navigate directly to:
-  https://chromewebstore.google.com/detail/hdailbkmbdcililnbemepacdkfdkbhco
-- Inform the user:
-  - The extension requests access to bookmarks and `localhost`.
-  - The extension is reviewed by Google via the Chrome Web Store.
-  - It is safe to proceed.
-- Click **Add to Chrome**.
-- Confirm installation.
-- WAIT for user confirmation.
-
-### Phase 1 Completion Gate
-
-STOP.
-
-Tell the user:
-- “Phase 1 is complete.”
-- "When you are ready to continue, reply exactly with: UNLOCK PHASE 2 -- Pin Extension"
-
-Do NOT proceed without the exact unlock phrase.
-
----
-
-# Phase 2 — Pin Extension
-
-CURRENT PHASE: 2
-
-## Steps
-
-- Open the browser Extensions menu.
-- Locate **Subscribed Toolbar**.
-- Click **Pin**.
-- Confirm the extension icon is visible in the browser toolbar.
-- WAIT for user confirmation.
-
-### Phase 2 Completion Gate
-
-STOP.
-
-Tell the user:
-- “Phase 2 is complete.”
-- "When you are ready to continue, reply exactly with: UNLOCK PHASE 3 -- Verify Options / Adjust Sync Interval"
-
-Do NOT proceed without the exact unlock phrase.
-
----
-
-# Phase 3 — Verify Options / Adjust Sync Interval
-
-CURRENT PHASE: 3
-
-## Steps
-
-- Click the Subscribed Toolbar icon.
-- Open **Options**.
-- Locate **Sync Interval**.
-- Change the value:
-  - From `15 minutes`
-  - To `600 minutes`
-- Click **Save** (if present).
-- WAIT for user confirmation.
-
-### Phase 3 Completion Gate
-
-STOP.
-
-Tell the user:
-- “Phase 3 is complete.”
-- "When you are ready to continue, reply exactly with: UNLOCK PHASE 4 -- Locate Subscribed Toolbar Folder"
-
-Do NOT proceed without the exact unlock phrase.
-
----
-
-# Phase 4 — Locate Subscribed Toolbar Folder
-
-CURRENT PHASE: 4
-
-## Steps
-
-- Open the browser **Bookmarks Manager**.
-- Locate the bookmarks folder created by Subscribed Toolbar.
-- Confirm the folder is visible.
-- WAIT for user confirmation.
-
-### Phase 4 Completion Gate
-
-STOP.
-
-Tell the user:
-- “Phase 4 is complete.”
-- "When you are ready to continue, reply exactly with: UNLOCK PHASE 5 -- Add Initial Bookmarks"
-
-Do NOT proceed without the exact unlock phrase.
-
----
-
-# Phase 5 — Add Initial Bookmarks
-
-CURRENT PHASE: 5
-
-## Steps
-
-- Add **3–5 frequently used websites**.
-- Add them directly into the subscribed toolbar folder.
-- WAIT for user confirmation.
-
-### Phase 5 Completion Gate
-
-STOP.
-
-Tell the user:
-- “Phase 5 is complete.”
-- "When you are ready to continue, reply exactly with: UNLOCK PHASE 6 -- Create Jsonmaker Account"
-
-Do NOT proceed without the exact unlock phrase.
-
----
-
-# Phase 6 — Create Jsonmaker Account
+# Phase 6 - Create Jsonmaker Account
 
 CURRENT PHASE: 6
 
@@ -200,14 +66,14 @@ CURRENT PHASE: 6
 STOP.
 
 Tell the user:
-- “Phase 6 is complete.”
+- "Phase 6 is complete."
 - "When you are ready to continue, reply exactly with: UNLOCK PHASE 7 -- Import Toolbar into Jsonmaker"
 
 Do NOT proceed without the exact unlock phrase.
 
 ---
 
-# Phase 7 — Import Toolbar into Jsonmaker
+# Phase 7 - Import Toolbar into Jsonmaker
 
 CURRENT PHASE: 7
 
@@ -225,14 +91,14 @@ CURRENT PHASE: 7
 STOP.
 
 Tell the user:
-- “Phase 7 is complete.”
+- "Phase 7 is complete."
 - "When you are ready to continue, reply exactly with: UNLOCK PHASE 8 -- Connect Jsonmaker to Extension (CRITICAL)"
 
 Do NOT proceed without the exact unlock phrase.
 
 ---
 
-# Phase 8 — Connect Jsonmaker to Extension (CRITICAL)
+# Phase 8 - Connect Jsonmaker to Extension (CRITICAL)
 
 CURRENT PHASE: 8
 
@@ -256,14 +122,14 @@ CURRENT PHASE: 8
 STOP.
 
 Tell the user:
-- “Phase 8 is complete.”
+- "Phase 8 is complete."
 - "When you are ready to continue, reply exactly with: UNLOCK PHASE 9 -- Confirm Source of Truth"
 
 Do NOT proceed without the exact unlock phrase.
 
 ---
 
-# Phase 9 — Confirm Source of Truth
+# Phase 9 - Confirm Source of Truth
 
 CURRENT PHASE: 9
 
@@ -279,14 +145,14 @@ CURRENT PHASE: 9
 STOP.
 
 Tell the user:
-- “Phase 9 is complete.”
+- "Phase 9 is complete."
 - "When you are ready to continue, reply exactly with: UNLOCK PHASE 10 -- Organize Folders"
 
 Do NOT proceed without the exact unlock phrase.
 
 ---
 
-# Phase 10 — Organize Folders
+# Phase 10 - Organize Folders
 
 CURRENT PHASE: 10
 
@@ -301,14 +167,14 @@ CURRENT PHASE: 10
 STOP.
 
 Tell the user:
-- “Phase 10 is complete.”
+- "Phase 10 is complete."
 - "When you are ready to continue, reply exactly with: UNLOCK PHASE 11 -- Partial Sharing via View Node"
 
 Do NOT proceed without the exact unlock phrase.
 
 ---
 
-# Phase 11 — Partial Sharing via View Node
+# Phase 11 - Partial Sharing via View Node
 
 CURRENT PHASE: 11
 
@@ -318,7 +184,7 @@ CURRENT PHASE: 11
 - Click **View Node**.
 - Copy the folder-specific URL.
 - Confirm understanding:
-  - Only that folder’s contents are shared via the URL.
+  - Only that folder's contents are shared via the URL.
 - WAIT for user confirmation.
 
 ### Phase 11 Completion Gate
@@ -326,14 +192,14 @@ CURRENT PHASE: 11
 STOP.
 
 Tell the user:
-- “Phase 11 is complete.”
+- "Phase 11 is complete."
 - "When you are ready to continue, reply exactly with: UNLOCK PHASE 12 -- Habit Establishment"
 
 Do NOT proceed without the exact unlock phrase.
 
 ---
 
-# Phase 12 — Habit Establishment
+# Phase 12 - Habit Establishment
 
 CURRENT PHASE: 12
 
@@ -350,8 +216,8 @@ Educational explanations are allowed **only after Phase 12 is complete**.
 STOP.
 
 Tell the user:
-- “Phase 12 is complete.”
-- “Installation is finished.”
+- "Phase 12 is complete."
+- "Installation is finished."
 
 Do NOT proceed to any additional phases.
 
