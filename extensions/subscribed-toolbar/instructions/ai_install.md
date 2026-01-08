@@ -81,8 +81,7 @@ STOP.
 
 Tell the user:
 - “Phase 1 is complete.”
-- “When you are ready to continue, reply exactly with:  
-  `UNLOCK PHASE 2 -- Pin Extension`”
+- "When you are ready to continue, reply exactly with: UNLOCK PHASE 2 -- Pin Extension"
 
 Do NOT proceed without the exact unlock phrase.
 
@@ -106,8 +105,7 @@ STOP.
 
 Tell the user:
 - “Phase 2 is complete.”
-- “When you are ready to continue, reply exactly with:  
-  `UNLOCK PHASE 3 -- Verify Options / Adjust Sync Interval`”
+- "When you are ready to continue, reply exactly with: UNLOCK PHASE 3 -- Verify Options / Adjust Sync Interval"
 
 Do NOT proceed without the exact unlock phrase.
 
@@ -134,8 +132,7 @@ STOP.
 
 Tell the user:
 - “Phase 3 is complete.”
-- “When you are ready to continue, reply exactly with:  
-  `UNLOCK PHASE 4 -- Locate Subscribed Toolbar Folder`”
+- "When you are ready to continue, reply exactly with: UNLOCK PHASE 4 -- Locate Subscribed Toolbar Folder"
 
 Do NOT proceed without the exact unlock phrase.
 
@@ -158,8 +155,7 @@ STOP.
 
 Tell the user:
 - “Phase 4 is complete.”
-- “When you are ready to continue, reply exactly with:  
-  `UNLOCK PHASE 5 -- Add Initial Bookmarks`”
+- "When you are ready to continue, reply exactly with: UNLOCK PHASE 5 -- Add Initial Bookmarks"
 
 Do NOT proceed without the exact unlock phrase.
 
@@ -181,8 +177,7 @@ STOP.
 
 Tell the user:
 - “Phase 5 is complete.”
-- “When you are ready to continue, reply exactly with:  
-  `UNLOCK PHASE 6 -- Create Jsonmaker Account`”
+- "When you are ready to continue, reply exactly with: UNLOCK PHASE 6 -- Create Jsonmaker Account"
 
 Do NOT proceed without the exact unlock phrase.
 
@@ -206,8 +201,7 @@ STOP.
 
 Tell the user:
 - “Phase 6 is complete.”
-- “When you are ready to continue, reply exactly with:  
-  `UNLOCK PHASE 7 -- Import Toolbar into Jsonmaker`”
+- "When you are ready to continue, reply exactly with: UNLOCK PHASE 7 -- Import Toolbar into Jsonmaker"
 
 Do NOT proceed without the exact unlock phrase.
 
@@ -232,8 +226,7 @@ STOP.
 
 Tell the user:
 - “Phase 7 is complete.”
-- “When you are ready to continue, reply exactly with:  
-  `UNLOCK PHASE 8 -- Connect Jsonmaker to Extension (CRITICAL)`”
+- "When you are ready to continue, reply exactly with: UNLOCK PHASE 8 -- Connect Jsonmaker to Extension (CRITICAL)"
 
 Do NOT proceed without the exact unlock phrase.
 
@@ -264,8 +257,7 @@ STOP.
 
 Tell the user:
 - “Phase 8 is complete.”
-- “When you are ready to continue, reply exactly with:  
-  `UNLOCK PHASE 9 -- Confirm Source of Truth`”
+- "When you are ready to continue, reply exactly with: UNLOCK PHASE 9 -- Confirm Source of Truth"
 
 Do NOT proceed without the exact unlock phrase.
 
@@ -288,8 +280,7 @@ STOP.
 
 Tell the user:
 - “Phase 9 is complete.”
-- “When you are ready to continue, reply exactly with:  
-  `UNLOCK PHASE 10 -- Organize Folders`”
+- "When you are ready to continue, reply exactly with: UNLOCK PHASE 10 -- Organize Folders"
 
 Do NOT proceed without the exact unlock phrase.
 
@@ -311,8 +302,7 @@ STOP.
 
 Tell the user:
 - “Phase 10 is complete.”
-- “When you are ready to continue, reply exactly with:  
-  `UNLOCK PHASE 11 -- Partial Sharing via View Node`”
+- "When you are ready to continue, reply exactly with: UNLOCK PHASE 11 -- Partial Sharing via View Node"
 
 Do NOT proceed without the exact unlock phrase.
 
@@ -337,8 +327,7 @@ STOP.
 
 Tell the user:
 - “Phase 11 is complete.”
-- “When you are ready to continue, reply exactly with:  
-  `UNLOCK PHASE 12 -- Habit Establishment`”
+- "When you are ready to continue, reply exactly with: UNLOCK PHASE 12 -- Habit Establishment"
 
 Do NOT proceed without the exact unlock phrase.
 
