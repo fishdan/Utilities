@@ -1,5 +1,5 @@
 # Phase 12 - Habit Establishment
-**Phase URL:** `https://raw.githubusercontent.com/fishdan/Utilities/main/extensions/subscribed-toolbar/ai_install_phase12.md`
+**Phase URL:** `https://github.com/fishdan/Utilities/blob/main/extensions/subscribed-toolbar/ai_install_phase12.md`
 
 ## Steps
 
@@ -12,7 +12,7 @@
 ---
 
 After Phase 12 is confirmed, validate Completion Conditions below.
-If you need to reload this phase, use `https://raw.githubusercontent.com/fishdan/Utilities/main/extensions/subscribed-toolbar/ai_install_phase12.md`.
+If you need to reload this phase, use `https://github.com/fishdan/Utilities/blob/main/extensions/subscribed-toolbar/ai_install_phase12.md`.
 
 ---
 

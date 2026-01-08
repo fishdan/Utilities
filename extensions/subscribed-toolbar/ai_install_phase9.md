@@ -1,5 +1,5 @@
 # Phase 9 - Confirm Source of Truth
-**Phase URL:** `https://raw.githubusercontent.com/fishdan/Utilities/main/extensions/subscribed-toolbar/ai_install_phase9.md`
+**Phase URL:** `https://github.com/fishdan/Utilities/blob/main/extensions/subscribed-toolbar/ai_install_phase9.md`
 
 ## Steps
 
@@ -12,4 +12,4 @@
 
 ---
 
-After Phase 9 is confirmed, load `https://raw.githubusercontent.com/fishdan/Utilities/main/extensions/subscribed-toolbar/ai_install_phase10.md` and continue.
+After Phase 9 is confirmed, load `https://github.com/fishdan/Utilities/blob/main/extensions/subscribed-toolbar/ai_install_phase10.md` and continue.

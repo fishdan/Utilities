@@ -14,7 +14,7 @@ Once we start the user on the installation path, these steps are meant to be ATO
 
 ## Usage
 
-- Start with `https://raw.githubusercontent.com/fishdan/Utilities/main/extensions/subscribed-toolbar/ai_install_phase1.md`.
+- Start with `https://github.com/fishdan/Utilities/blob/main/extensions/subscribed-toolbar/ai_install_phase1.md`.
 
 
 

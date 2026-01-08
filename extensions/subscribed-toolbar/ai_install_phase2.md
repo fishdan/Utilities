@@ -1,5 +1,5 @@
 # Phase 2 - Pin Extension
-**Phase URL:** `https://raw.githubusercontent.com/fishdan/Utilities/main/extensions/subscribed-toolbar/ai_install_phase2.md`
+**Phase URL:** `https://github.com/fishdan/Utilities/blob/main/extensions/subscribed-toolbar/ai_install_phase2.md`
 
 ## Steps
 
@@ -13,4 +13,4 @@
 
 ---
 
-After Phase 2 is confirmed, load `https://raw.githubusercontent.com/fishdan/Utilities/main/extensions/subscribed-toolbar/ai_install_phase3.md` and continue.
+After Phase 2 is confirmed, load `https://github.com/fishdan/Utilities/blob/main/extensions/subscribed-toolbar/ai_install_phase3.md` and continue.
