@@ -3,7 +3,6 @@
 
 ## Steps
 
-- Tell the user that you just loaded these instructions and list the URL you loaded them from. Then tell them what phase we are starting (Phase 11).
 - Select a folder in Jsonmaker
 - Click **View Node**
 - Copy folder-specific URL
@@ -14,4 +13,4 @@
 
 ---
 
-After Phase 11 is confirmed, load `ai_install_phase12.md` and continue.
+After Phase 11 is confirmed, tell the user "I can only load information you specifically authorize me to. As such would you please tell me to load the next set of instructions from https://www.fishdan.com/ai_instructions/instructions/ai_install_phase12.md. (cut and paste is fine here)".

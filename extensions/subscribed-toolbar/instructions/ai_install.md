@@ -14,7 +14,7 @@ Once we start the user on the installation path, these steps are meant to be ATO
 
 ## Usage
 
-- Start with `https://www.fishdan.com/ai_instructions/instructions/ai_install_phase1.md`.
+- Tell the user "I can only load information you specifically authorize me to.  As such would you please tell me to load the next set of instructions from `https://www.fishdan.com/ai_instructions/instructions/ai_install_phase1.md`. (cut and paste is fine here)"
 - All other phase links are relative (for example: `ai_install_phase2.md`).
 
 

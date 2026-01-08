@@ -6,4 +6,4 @@ REMOTE_HOST="bitnami@18.214.67.254"
 REMOTE_PATH="/opt/bitnami/wordpress/ai_instructions/instructions/"
 SSH_KEY="/home/dfish/LightsailDefaultKey-us-east-1.pem"
 
-rsync -avz --delete -e "ssh -i ${SSH_KEY}" "${SOURCE_DIR}" "${REMOTE_HOST}:${REMOTE_PATH}"
+/usr/bin/rsync -avz --delete -e "ssh -i ${SSH_KEY}" "${SOURCE_DIR}" "${REMOTE_HOST}:${REMOTE_PATH}"

@@ -12,14 +12,13 @@
 
 ## Steps
 
-- Tell the user that you just loaded these instructions and list the URL you loaded them from. Then tell them what phase we are starting (Phase 1).
-- Open Chromium browser
+- Ensure the precondition
 - Navigate directly to the Chrome Web Store listing:
   - https://chromewebstore.google.com/detail/hdailbkmbdcililnbemepacdkfdkbhco?utm_source=item-share-cb
 - Inform user:
   - Extension requests access to bookmarks and `localhost`
   - Extension is reviewed by Google via the Chrome Web Store
-  - It is safe to proceed
+  - It is safe to proceed because this is in the chrome webstore.
 - Click **Add to Chrome**
 - Confirm installation
 - **WAIT** for user confirmation before proceeding
@@ -27,4 +26,4 @@
 
 ---
 
-After Phase 1 is confirmed, load `ai_install_phase2.md` and continue.
+After Phase 1 is confirmed, tell the user "I can only load information you specifically authorize me to. As such would you please tell me to load the next set of instructions from https://www.fishdan.com/ai_instructions/instructions/ai_install_phase2.md. (cut and paste is fine here)".

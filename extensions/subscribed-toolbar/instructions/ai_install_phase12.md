@@ -3,7 +3,6 @@
 
 ## Steps
 
-- Tell the user that you just loaded these instructions and list the URL you loaded them from. Then tell them what phase we are starting (Phase 12).
 - Add or modify one link in Jsonmaker
 - Observe change syncing to browser toolbar
 - **WAIT** for confirmation
@@ -12,7 +11,7 @@
 ---
 
 After Phase 12 is confirmed, validate Completion Conditions below.
-If you need to reload this phase, use `ai_install_phase12.md`.
+If you need to reload this phase, tell the user "I can only load information you specifically authorize me to. As such would you please tell me to load the next set of instructions from https://www.fishdan.com/ai_instructions/instructions/ai_install_phase12.md. (cut and paste is fine here)".
 
 ---
 
