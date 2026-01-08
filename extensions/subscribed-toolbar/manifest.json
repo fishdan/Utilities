@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Subscribed Toolbar",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "author": "Daniel Fishman",
   "description": "Mirror a remote bookmarks feed into a toolbar folder that stays in sync.",
   "permissions": ["bookmarks", "storage", "alarms", "scripting"],
