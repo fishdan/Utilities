@@ -175,8 +175,6 @@ STOP.
 
 Tell the user:
 - "Phase 5 is complete."
-- "When you are ready to continue, reply exactly with: UNLOCK PHASE 6 -- Create Jsonmaker Account"
-
-Do NOT proceed without the exact unlock phrase.
+- "Congratulations!  You have installed the Subscribed Toolbar!  Look for your instructions about how to integrate JSONMaker on the wbe page where you started this."
 
 ---
