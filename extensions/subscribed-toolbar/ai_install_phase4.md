@@ -2,7 +2,7 @@
 
 ## Steps
 
-- Tell the user we are starting Phase 4.
+- Tell the user that you just loaded these instructions and list the URL you loaded them from. Then tell them what phase we are starting (Phase 4).
 - Open browser **Bookmarks Manager**
 - Locate bookmarks folder created by Subscribed Toolbar
 - Confirm folder is visible

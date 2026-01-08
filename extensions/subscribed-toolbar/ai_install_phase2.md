@@ -2,7 +2,7 @@
 
 ## Steps
 
-- Tell the user we are starting Phase 2.
+- Tell the user that you just loaded these instructions and list the URL you loaded them from. Then tell them what phase we are starting (Phase 2).
 - Open browser Extensions menu
 - Locate **Subscribed Toolbar**
 - Click **Pin**

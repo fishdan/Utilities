@@ -2,7 +2,7 @@
 
 ## Steps
 
-- Tell the user we are starting Phase 6.
+- Tell the user that you just loaded these instructions and list the URL you loaded them from. Then tell them what phase we are starting (Phase 6).
 - Navigate to:
   - https://www.fishdan.com/jsonmaker/
 - Create account or sign in

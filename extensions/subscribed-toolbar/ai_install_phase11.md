@@ -2,7 +2,7 @@
 
 ## Steps
 
-- Tell the user we are starting Phase 11.
+- Tell the user that you just loaded these instructions and list the URL you loaded them from. Then tell them what phase we are starting (Phase 11).
 - Select a folder in Jsonmaker
 - Click **View Node**
 - Copy folder-specific URL

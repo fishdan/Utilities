@@ -2,7 +2,7 @@
 
 ## Steps
 
-- Tell the user we are starting Phase 5.
+- Tell the user that you just loaded these instructions and list the URL you loaded them from. Then tell them what phase we are starting (Phase 5).
 - Add **3-5 frequently used websites**
 - Add directly into the subscribed toolbar folder
 - **WAIT** for confirmation

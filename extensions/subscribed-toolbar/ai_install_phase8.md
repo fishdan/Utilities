@@ -2,7 +2,7 @@
 
 ## Steps
 
-- Tell the user we are starting Phase 8.
+- Tell the user that you just loaded these instructions and list the URL you loaded them from. Then tell them what phase we are starting (Phase 8).
 - In Jsonmaker:
   - Select top-level node to sync
   - Click **View Node**

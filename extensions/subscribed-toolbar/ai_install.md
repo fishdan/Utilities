@@ -16,7 +16,7 @@ Once we start the user on the installation path, these steps are meant to be ATO
 
 - Start with `ai_install_phase1.md`.
 - Each phase file instructs when to load the next phase.
-- After Phase 12, validate the Completion Conditions in this file.
+
 
 ---
 

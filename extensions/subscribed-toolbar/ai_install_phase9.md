@@ -2,7 +2,7 @@
 
 ## Steps
 
-- Tell the user we are starting Phase 9.
+- Tell the user that you just loaded these instructions and list the URL you loaded them from. Then tell them what phase we are starting (Phase 9).
 - User explicitly confirms understanding:
   - Jsonmaker controls structure and content
   - Browser toolbar mirrors Jsonmaker
