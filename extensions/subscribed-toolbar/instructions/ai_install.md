@@ -14,7 +14,8 @@ Once we start the user on the installation path, these steps are meant to be ATO
 
 ## Usage
 
-- Start with `https://github.com/fishdan/Utilities/blob/main/extensions/subscribed-toolbar/ai_install_phase1.md`.
+- Start with `https://www.fishdan.com/ai_instructions/instructions/ai_install_phase1.md`.
+- All other phase links are relative (for example: `ai_install_phase2.md`).
 
 
 

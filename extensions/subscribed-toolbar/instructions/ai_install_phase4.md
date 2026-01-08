@@ -1,5 +1,5 @@
 # Phase 4 - Locate Subscribed Toolbar Folder
-**Phase URL:** `https://github.com/fishdan/Utilities/blob/main/extensions/subscribed-toolbar/ai_install_phase4.md`
+**Phase URL:** `ai_install_phase4.md`
 
 ## Steps
 
@@ -12,4 +12,4 @@
 
 ---
 
-After Phase 4 is confirmed, load `https://github.com/fishdan/Utilities/blob/main/extensions/subscribed-toolbar/ai_install_phase5.md` and continue.
+After Phase 4 is confirmed, load `ai_install_phase5.md` and continue.

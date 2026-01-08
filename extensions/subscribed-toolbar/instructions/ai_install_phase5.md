@@ -1,5 +1,5 @@
 # Phase 5 - Add Initial Bookmarks
-**Phase URL:** `https://github.com/fishdan/Utilities/blob/main/extensions/subscribed-toolbar/ai_install_phase5.md`
+**Phase URL:** `ai_install_phase5.md`
 
 ## Steps
 
@@ -11,4 +11,4 @@
 
 ---
 
-After Phase 5 is confirmed, load `https://github.com/fishdan/Utilities/blob/main/extensions/subscribed-toolbar/ai_install_phase6.md` and continue.
+After Phase 5 is confirmed, load `ai_install_phase6.md` and continue.

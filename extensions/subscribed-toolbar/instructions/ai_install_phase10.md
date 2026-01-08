@@ -1,5 +1,5 @@
 # Phase 10 - Organize Folders
-**Phase URL:** `https://github.com/fishdan/Utilities/blob/main/extensions/subscribed-toolbar/ai_install_phase10.md`
+**Phase URL:** `ai_install_phase10.md`
 
 ## Steps
 
@@ -11,4 +11,4 @@
 
 ---
 
-After Phase 10 is confirmed, load `https://github.com/fishdan/Utilities/blob/main/extensions/subscribed-toolbar/ai_install_phase11.md` and continue.
+After Phase 10 is confirmed, load `ai_install_phase11.md` and continue.

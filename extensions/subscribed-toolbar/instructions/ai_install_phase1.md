@@ -1,5 +1,5 @@
 # Phase 1 - Install Extension (Includes Permission Notice)
-**Phase URL:** `https://github.com/fishdan/Utilities/blob/main/extensions/subscribed-toolbar/ai_install_phase1.md`
+**Phase URL:** `ai_install_phase1.md`
 
 ## Preconditions
 
@@ -27,4 +27,4 @@
 
 ---
 
-After Phase 1 is confirmed, load `https://github.com/fishdan/Utilities/blob/main/extensions/subscribed-toolbar/ai_install_phase2.md` and continue.
+After Phase 1 is confirmed, load `ai_install_phase2.md` and continue.

@@ -1,5 +1,5 @@
 # Phase 3 - Verify Options / Adjust Sync Interval
-**Phase URL:** `https://github.com/fishdan/Utilities/blob/main/extensions/subscribed-toolbar/ai_install_phase3.md`
+**Phase URL:** `ai_install_phase3.md`
 
 ## Steps
 
@@ -16,4 +16,4 @@
 
 ---
 
-After Phase 3 is confirmed, load `https://github.com/fishdan/Utilities/blob/main/extensions/subscribed-toolbar/ai_install_phase4.md` and continue.
+After Phase 3 is confirmed, load `ai_install_phase4.md` and continue.
