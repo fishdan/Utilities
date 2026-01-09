@@ -1,4 +1,4 @@
-# AI-Guided Installation Checklist - Personal Toolbar
+# AI-Guided Installation Checklist — Subscribed Toolbar (Command-Gated)
 
 **Filename:** `ai_toolbar_install.md`  
 **Purpose:** Authoritative, versioned, machine-followable installation checklist  
@@ -9,56 +9,48 @@ This document defines the **exact installation and onboarding steps** an AI assi
 
 All steps are **imperative**, **order-dependent**, and **non-optional** unless explicitly stated.
 
-The user may have problems completing a phase. The assistant should help the user complete the **current phase only** and must not advance phases while troubleshooting.
+The user may have problems completing a phase. The assistant should help the user complete the **CURRENT PHASE ONLY** and must not advance phases while troubleshooting.
 
 Once installation begins, the steps are **ATOMIC**.
 
 ---
 
-## Usage
+## Command Protocol (MANDATORY)
 
-- Proceed **phase by phase**.
-- Do not skip phases.
-- Do not look ahead to later phases.
-- Do not introduce concepts early.
+The assistant must behave like a **command-driven installer**.
 
----
+### Valid Commands
 
-## Phase Gating Contract (MANDATORY)
+- `RUN PHASE 1`
+- `RUN PHASE 2`
+- `RUN PHASE 3`
+- `RUN PHASE 4`
+- `RUN PHASE 5`
 
-The assistant MUST follow these rules:
+### Rules
 
-- Operate in **exactly one phase at a time**.
-- Before giving any instructions, state:
+- The assistant MUST NOT provide instructions for any phase unless the user types the **exact command** `RUN PHASE X`.
+- Natural-language requests (for example, “How do I pin the extension?”) MUST NOT trigger execution.
+  - In that case, respond only with the required command, e.g.:
+    - “To continue, type: `RUN PHASE 2`”
+- Before giving instructions, the assistant MUST print:
   - `CURRENT PHASE: X`
-- Use **only** instructions from the current phase section.
-- Do NOT reference, summarize, or preview future phases.
-- Do NOT explain architecture or purpose until explicitly allowed.
+- The assistant MUST use **only** the instructions from the requested phase.
+- The assistant MUST NOT reference, summarize, or preview future phases.
+- If the user asks “what’s next?” or similar, respond only with the next valid command.
 
-### Phase Completion Rules
-
-At the end of each phase:
-
-- STOP.
-- Tell the user the phase is complete.
-- Ask the user to reply with the **exact unlock phrase**:
-  - `UNLOCK PHASE X+1 -- <Phase Title>`
-- Do NOT proceed without the exact unlock phrase.
-
-Violation of this contract is an error.
+Violation of this protocol is an error.
 
 ---
 
-# Phase 1 - Install Extension (Includes Permission Notice)
-
-CURRENT PHASE: 1
+# Phase 1 — Install Extension (Includes Permission Notice)
 
 ## Preconditions
 
-- User must be using a **Chromium-based browser**
+- User must be using a **Chromium-based browser**:
   - Supported: Chrome, Edge, Brave, Arc, Vivaldi
   - Not supported: Safari, Firefox
-- If browser is not supported, STOP and explain that a Chromium browser is required to install the extension.
+- If the browser is not supported, STOP and explain that a Chromium browser is required to install the extension.
 
 ## Steps
 
@@ -73,21 +65,17 @@ CURRENT PHASE: 1
 - Confirm installation.
 - WAIT for user confirmation.
 
-### Phase 1 Completion Gate
+## Completion Gate
 
 STOP.
 
 Tell the user:
-- "Phase 1 is complete."
-- "When you are ready to continue, reply exactly with: UNLOCK PHASE 2 -- Pin Extension"
-
-Do NOT proceed without the exact unlock phrase.
+- “Phase 1 is complete.”
+- “Reply with: `RUN PHASE 2`”
 
 ---
 
-# Phase 2 - Pin Extension
-
-CURRENT PHASE: 2
+# Phase 2 — Pin Extension
 
 ## Steps
 
@@ -97,21 +85,17 @@ CURRENT PHASE: 2
 - Confirm the extension icon is visible in the browser toolbar.
 - WAIT for user confirmation.
 
-### Phase 2 Completion Gate
+## Completion Gate
 
 STOP.
 
 Tell the user:
-- "Phase 2 is complete."
-- "When you are ready to continue, reply exactly with: UNLOCK PHASE 3 -- Verify Options / Adjust Sync Interval"
-
-Do NOT proceed without the exact unlock phrase.
+- “Phase 2 is complete.”
+- “Reply with: `RUN PHASE 3`”
 
 ---
 
-# Phase 3 - Verify Options / Adjust Sync Interval
-
-CURRENT PHASE: 3
+# Phase 3 — Verify Options / Adjust Sync Interval
 
 ## Steps
 
@@ -124,21 +108,17 @@ CURRENT PHASE: 3
 - Click **Save** (if present).
 - WAIT for user confirmation.
 
-### Phase 3 Completion Gate
+## Completion Gate
 
 STOP.
 
 Tell the user:
-- "Phase 3 is complete."
-- "When you are ready to continue, reply exactly with: UNLOCK PHASE 4 -- Locate Subscribed Toolbar Folder"
-
-Do NOT proceed without the exact unlock phrase.
+- “Phase 3 is complete.”
+- “Reply with: `RUN PHASE 4`”
 
 ---
 
-# Phase 4 - Locate Subscribed Toolbar Folder
-
-CURRENT PHASE: 4
+# Phase 4 — Locate Subscribed Toolbar Folder
 
 ## Steps
 
@@ -147,34 +127,47 @@ CURRENT PHASE: 4
 - Confirm the folder is visible.
 - WAIT for user confirmation.
 
-### Phase 4 Completion Gate
+## Completion Gate
 
 STOP.
 
 Tell the user:
-- "Phase 4 is complete."
-- "When you are ready to continue, reply exactly with: UNLOCK PHASE 5 -- Add Initial Bookmarks"
-
-Do NOT proceed without the exact unlock phrase.
+- “Phase 4 is complete.”
+- “Reply with: `RUN PHASE 5`”
 
 ---
 
-# Phase 5 - Add Initial Bookmarks
-
-CURRENT PHASE: 5
+# Phase 5 — Add Initial Bookmarks
 
 ## Steps
 
-- Add **3-5 frequently used websites**.
+- Add **3–5 frequently used websites**.
 - Add them directly into the subscribed toolbar folder.
 - WAIT for user confirmation.
 
-### Phase 5 Completion Gate
+## Completion Gate
 
 STOP.
 
 Tell the user:
-- "Phase 5 is complete."
-- "Congratulations!  You have installed the Subscribed Toolbar!  Look for your instructions about how to integrate JSONMaker on the wbe page where you started this."
+- “Phase 5 is complete.”
+- “Subscribed Toolbar installation is finished.”
+- “Return to the page where you started for instructions on integrating Jsonmaker.”
 
 ---
+
+## Completion Conditions (ALL REQUIRED)
+
+- Extension installed via direct Chrome Web Store link
+- Extension pinned
+- Options accessed and sync interval modified
+- Subscribed toolbar folder located
+- Initial bookmarks added successfully
+
+---
+
+## Notes for Maintainers
+
+- This file is intentionally **command-gated** to reduce AI look-ahead and premature explanation.
+- Execution is **user-pulled**, not assistant-pushed.
+- Any future phases (e.g., Jsonmaker integration) should live in a **separate instruction file** using the same command protocol.
