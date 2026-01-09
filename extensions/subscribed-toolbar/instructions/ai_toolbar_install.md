@@ -1,4 +1,4 @@
-# AI-Guided Installation Checklist — Subscribed Toolbar (Command-Gated)
+# AI-Guided Installation Checklist - Subscribed Toolbar
 
 **Filename:** `ai_toolbar_install.md`  
 **Purpose:** Authoritative, versioned, machine-followable installation checklist  
@@ -15,36 +15,34 @@ Once installation begins, the steps are **ATOMIC**.
 
 ---
 
-## Command Protocol (MANDATORY)
+## Phase Gating Contract (MANDATORY)
 
-The assistant must behave like a **command-driven installer**.
+The assistant MUST follow these rules:
 
-### Valid Commands
+- Operate in exactly one phase at a time.
+- Before giving instructions, state:
+  - CURRENT PHASE: X
+- Use only the instructions from the current phase section.
+- Do NOT reference, summarize, or preview future phases.
+- If the user asks "what's next?" or similar, respond only with the required unlock phrase.
+- There are ONLY 5 phases. If anything beyond Phase 5 is requested, state that this file ends at Phase 5 and stop.
 
-- `RUN PHASE 1`
-- `RUN PHASE 2`
-- `RUN PHASE 3`
-- `RUN PHASE 4`
-- `RUN PHASE 5`
+### Phase Completion Rules
 
-### Rules
+At the end of each phase:
 
-- The assistant MUST NOT provide instructions for any phase unless the user types the **exact command** `RUN PHASE X`.
-- Natural-language requests (for example, “How do I pin the extension?”) MUST NOT trigger execution.
-  - In that case, respond only with the required command, e.g.:
-    - “To continue, type: `RUN PHASE 2`”
-- Before giving instructions, the assistant MUST print:
-  - `CURRENT PHASE: X`
-- The assistant MUST use **only** the instructions from the requested phase.
-- The assistant MUST NOT reference, summarize, or preview future phases.
-- If the user asks “what’s next?” or similar, respond only with the next valid command.
-- there are ONLY 5 phases.  Tell the user the 5 phases you will run.  If you are ever running a phase after 5, tell the user you have made an error and asl the user to help you get back on track.
+- STOP.
+- Tell the user the phase is complete.
+- Ask the user to reply with the exact unlock phrase shown in the phase completion gate.
+- Do NOT proceed without the exact unlock phrase.
 
-Violation of this protocol is an error.
+Violation of this contract is an error.
 
 ---
 
-# Phase 1 — Install Extension (Includes Permission Notice)
+# Phase 1 - Install Extension (Includes Permission Notice)
+
+CURRENT PHASE: 1
 
 ## Preconditions
 
@@ -71,12 +69,16 @@ Violation of this protocol is an error.
 STOP.
 
 Tell the user:
-- “Phase 1 is complete.”
-- “Reply with: `RUN PHASE 2`”
+- "Phase 1 is complete."
+- "When you are ready to continue, reply exactly with: UNLOCK PHASE 2 -- Pin Extension"
+
+Do NOT proceed without the exact unlock phrase.
 
 ---
 
-# Phase 2 — Pin Extension
+# Phase 2 - Pin Extension
+
+CURRENT PHASE: 2
 
 ## Steps
 
@@ -91,12 +93,16 @@ Tell the user:
 STOP.
 
 Tell the user:
-- “Phase 2 is complete.”
-- “Reply with: `RUN PHASE 3`”
+- "Phase 2 is complete."
+- "When you are ready to continue, reply exactly with: UNLOCK PHASE 3 -- Verify Options / Adjust Sync Interval"
+
+Do NOT proceed without the exact unlock phrase.
 
 ---
 
-# Phase 3 — Verify Options / Adjust Sync Interval
+# Phase 3 - Verify Options / Adjust Sync Interval
+
+CURRENT PHASE: 3
 
 ## Steps
 
@@ -114,12 +120,16 @@ Tell the user:
 STOP.
 
 Tell the user:
-- “Phase 3 is complete.”
-- “Reply with: `RUN PHASE 4`”
+- "Phase 3 is complete."
+- "When you are ready to continue, reply exactly with: UNLOCK PHASE 4 -- Locate Subscribed Toolbar Folder"
+
+Do NOT proceed without the exact unlock phrase.
 
 ---
 
-# Phase 4 — Locate Subscribed Toolbar Folder
+# Phase 4 - Locate Subscribed Toolbar Folder
+
+CURRENT PHASE: 4
 
 ## Steps
 
@@ -133,16 +143,20 @@ Tell the user:
 STOP.
 
 Tell the user:
-- “Phase 4 is complete.”
-- “Reply with: `RUN PHASE 5`”
+- "Phase 4 is complete."
+- "When you are ready to continue, reply exactly with: UNLOCK PHASE 5 -- Add Initial Bookmarks"
+
+Do NOT proceed without the exact unlock phrase.
 
 ---
 
-# Phase 5 — Add Initial Bookmarks
+# Phase 5 - Add Initial Bookmarks
+
+CURRENT PHASE: 5
 
 ## Steps
 
-- Add **3–5 frequently used websites**.
+- Add **3-5 frequently used websites**.
 - Add them directly into the subscribed toolbar folder.
 - WAIT for user confirmation.
 
@@ -151,24 +165,7 @@ Tell the user:
 STOP.
 
 Tell the user:
-- “Phase 5 is complete.”
-- “Subscribed Toolbar installation is finished.”
-- “Return to the page where you started for instructions on integrating Jsonmaker.”
-
----
-
-## Completion Conditions (ALL REQUIRED)
-
-- Extension installed via direct Chrome Web Store link
-- Extension pinned
-- Options accessed and sync interval modified
-- Subscribed toolbar folder located
-- Initial bookmarks added successfully
-
----
-
-## Notes for Maintainers
-
-- This file is intentionally **command-gated** to reduce AI look-ahead and premature explanation.
-- Execution is **user-pulled**, not assistant-pushed.
-- Any future phases (e.g., Jsonmaker integration) should live in a **separate instruction file** using the same command protocol.
+- "Phase 5 is complete."
+- "This file ends at Phase 5. Do not continue to another phase."
+- "Subscribed Toolbar installation is finished."
+- "Return to the page where you started for the next instructions."
