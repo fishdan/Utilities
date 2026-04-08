@@ -1,1 +1,13 @@
 We split the install checklist into phase files and moved them under extensions/subscribed-toolbar/instructions. Each phase now ends by asking the user to paste the next URL (AI fetches are blocked). Start point is https://www.fishdan.com/ai_instructions/instructions/ai_install_phase1.md, and all phase links are relative. We deployed the instructions to the Lightsail WordPress host at /opt/bitnami/wordpress/ai_instructions/instructions and set Content-Type for .md to text/plain. We added no-cache headers for /opt/bitnami/wordpress/ai_instructions in both wordpress vhost configs, fixed Apache, and confirmed headers now include Cache-Control/Pragma/Expires with 200 OK. Despite this, the web loader still blocks AI-initiated fetches; next step is to soften prompt language (avoid “load/fetch”), or collapse into a single file / paste-only flow.
+
+2026-04-08 — agent bootstrap and repo-ai setup
+Decisions: added `start.ai` as the repo entrypoint; vendored `.repo_ai` from `fishdan/repo-ai` as a submodule; standardized on branch-first work, including hotfix branches; pointed agent bootstrap at local GitHub App setup under `.repo_ai/secrets/`.
+Paths: `.gitmodules`, `.repo_ai`, `README.md`, `start.ai`, `progress.ai`, `ai_tools/ai_setup.md`
+Checks: `git branch --show-current` returned `main` before setup; created `chore/agent-bootstrap`; `specify check` passed and confirmed Specify CLI is available; `git submodule add https://github.com/fishdan/repo-ai .repo_ai` succeeded.
+Next: create local `.repo_ai/secrets/config.txt` and the GitHub App private key file, then run `.repo_ai/scripts/github-app-setup-git-auth.sh` before any bot-authored GitHub operations.
+
+2026-04-08 — GitHub App auth bootstrap and dependency audit
+Decisions: completed `.repo_ai` bootstrap using the local GitHub App workflow; future commits in this repo are now configured to use `ai-codex-dan[bot]`; kept secret material out of tracked files while validating the local auth path.
+Paths: `.repo_ai/scripts/github-app-setup-git-auth.sh`, `.repo_ai/secrets/config.txt`, `Java/target/dependency-check-report.html`, `progress.ai`
+Checks: `bash .repo_ai/scripts/github-app-setup-git-auth.sh` succeeded and configured git user `ai-codex-dan[bot]` / `2461425+ai-codex-dan[bot]@users.noreply.github.com`; `git config user.name` and `git config user.email` matched the bot identity; `mvn org.owasp:dependency-check-maven:check` completed successfully and wrote `Java/target/dependency-check-report.html`.
+Next: review the OWASP report and update the dependency chain pulling in `commons-beanutils@1.9.4` and `commons-lang3@3.12.0`, then make the next bot-authored commit from `chore/agent-bootstrap`.
