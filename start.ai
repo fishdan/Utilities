@@ -1,5 +1,9 @@
 # Utilities — agent start
 
+## Policy order
+- Read [`./constitution.md`](/home/dfish/projects/fishdan/Utilities/constitution.md) early. Treat it as the durable repo policy document.
+- Use this file as the operational session checklist and workflow guide.
+
 ## Bootstrap
 - Start every session at the repo root.
 - If `.repo_ai/` is missing, initialize it first: `git submodule update --init --recursive`.
@@ -37,7 +41,7 @@
 - Commit `progress.ai` with substantive work. Skip transient command noise and exploratory dead ends.
 
 ## Specs and scope
-- There is no established `tasks.md` or spec tree yet. Keep work tightly scoped to the user request.
+- There is no established `tasks.md` or spec tree yet. Keep work tightly scoped to the user request and within the boundaries set by [`./constitution.md`](/home/dfish/projects/fishdan/Utilities/constitution.md).
 - GitHub Spec Kit / Specify CLI is already available in this environment. Before starting a spec-driven workflow, verify the tool with `specify check`.
 - If a request would benefit from a new spec or task breakdown, propose the scope first, then create only the minimal spec/task artifacts needed for that branch.
 

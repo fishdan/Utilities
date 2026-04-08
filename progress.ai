@@ -11,3 +11,9 @@ Decisions: completed `.repo_ai` bootstrap using the local GitHub App workflow; f
 Paths: `.repo_ai/scripts/github-app-setup-git-auth.sh`, `.repo_ai/secrets/config.txt`, `Java/target/dependency-check-report.html`, `progress.ai`
 Checks: `bash .repo_ai/scripts/github-app-setup-git-auth.sh` succeeded and configured git user `ai-codex-dan[bot]` / `2461425+ai-codex-dan[bot]@users.noreply.github.com`; `git config user.name` and `git config user.email` matched the bot identity; `mvn org.owasp:dependency-check-maven:check` completed successfully and wrote `Java/target/dependency-check-report.html`.
 Next: review the OWASP report and update the dependency chain pulling in `commons-beanutils@1.9.4` and `commons-lang3@3.12.0`, then make the next bot-authored commit from `chore/agent-bootstrap`.
+
+2026-04-08 — add repo constitution
+Decisions: introduced a root `constitution.md` to define durable repo policy above `start.ai`; formalized branch-first work, bot-only GitHub auth, scope control, secrets handling, and logging expectations.
+Paths: `constitution.md`, `start.ai`, `progress.ai`
+Checks: aligned `start.ai` to defer to `constitution.md` for durable policy and keep `start.ai` focused on session workflow.
+Next: use the constitution as the reference point for future repo-policy and workflow changes.
