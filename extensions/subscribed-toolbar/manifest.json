@@ -2,6 +2,7 @@
   "manifest_version": 3,
   "name": "Subscribed Toolbar",
   "version": "0.1.8",
+  "_version_bump_policy": "Change version only when cutting a new Chrome Web Store release. Many commits may land on main before the next bump.",
   "author": "Daniel Fishman",
   "description": "Mirror a remote bookmarks feed into a toolbar folder that stays in sync.",
   "permissions": ["bookmarks", "storage", "alarms", "scripting"],
