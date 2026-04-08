@@ -1,0 +1,46 @@
+# Utilities — agent start
+
+## Bootstrap
+- Start every session at the repo root.
+- If `.repo_ai/` is missing, initialize it first: `git submodule update --init --recursive`.
+- Read [`./.repo_ai/repo.ai`](/home/dfish/projects/fishdan/Utilities/.repo_ai/repo.ai) before any GitHub operations or commit/push work.
+- If `.repo_ai/secrets/config.txt` or the GitHub App private key is missing, stop normal repo work and switch to setup help. Use [`./.repo_ai/secrets/README.md`](/home/dfish/projects/fishdan/Utilities/.repo_ai/secrets/README.md) to walk the user through creating the GitHub App, downloading the `.pem`, and creating `.repo_ai/secrets/config.txt`.
+- Suggested setup prompt for an agent session: "Read `.repo_ai/secrets/README.md` and tell me exactly which local files I need under `.repo_ai/secrets/`, where each value comes from in GitHub, and when to rerun `.repo_ai/scripts/github-app-setup-git-auth.sh`. Do not print any secret values."
+- After secrets are in place, complete `.repo_ai/repo.ai` bootstrap before returning to project work.
+
+## Git / GitHub
+- Prefer branch-based work for every substantive change. Do not do normal work directly on `main`.
+- If the user asks for changes while on `main`, create a scoped branch first, including for hotfixes.
+- `origin` is currently SSH: `git@github.com:fishdan/Utilities.git`.
+- For GitHub API, PR, or bot-authored commit workflows, use the local `.repo_ai` scripts and GitHub App auth path. Do not fall back to personal access tokens, OAuth, or human credentials.
+- If `.repo_ai` authentication fails or the repo/app permissions are unclear, stop and ask the user to fix the GitHub App setup rather than bypassing it.
+
+## Security
+- If `progress.ai` does not show a dependency audit in the last 30 days, run a Java dependency audit before discretionary work: `cd Java && mvn org.owasp:dependency-check-maven:check`.
+- Record the audit date, command, and any findings in `progress.ai`.
+- This repo contains browser scripts, TamperMonkey code, plugins, shell scripts, and Java utilities. Before changing third-party integrations or adding new remote dependencies, verify the source and note the decision in `progress.ai`.
+- Never store secrets, installation tokens, private keys, or passwords in `start.ai`, `progress.ai`, `README.md`, or any tracked file.
+
+## New packages
+- Research maintenance, adoption, and obvious security issues before adding a new library or service.
+- For Java dependencies, prefer stable releases over release candidates unless there is a clear reason to accept the risk.
+- If a dependency is not obviously low-risk, get explicit user confirmation before installing or committing it.
+
+## Progress log
+- Primary log: [`./progress.ai`](/home/dfish/projects/fishdan/Utilities/progress.ai)
+- Append durable entries in this format:
+  - `YYYY-MM-DD — short title`
+  - `Decisions:` concise decisions worth keeping
+  - `Paths:` files or directories changed
+  - `Checks:` commands run and outcomes
+  - `Next:` the next useful action if work is incomplete
+- Commit `progress.ai` with substantive work. Skip transient command noise and exploratory dead ends.
+
+## Specs and scope
+- There is no established `tasks.md` or spec tree yet. Keep work tightly scoped to the user request.
+- GitHub Spec Kit / Specify CLI is already available in this environment. Before starting a spec-driven workflow, verify the tool with `specify check`.
+- If a request would benefit from a new spec or task breakdown, propose the scope first, then create only the minimal spec/task artifacts needed for that branch.
+
+## Session orientation
+- Notice the current branch, whether `.repo_ai` is initialized, and whether GitHub App secrets are present before attempting repo operations.
+- Use the latest `progress.ai` entry and the active branch name to infer the next likely task when the user asks what should happen next.
