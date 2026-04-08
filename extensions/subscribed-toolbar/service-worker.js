@@ -249,25 +249,48 @@ function originPatternFromUrl(url) {
 }
 
 async function refreshContentScriptForFeed(feedUrl) {
-  const pattern = originPatternFromUrl(feedUrl);
   try {
     await chrome.scripting.unregisterContentScripts({ ids: [CONTENT_SCRIPT_ID] });
   } catch (_e) {
     // ignore if not previously registered
   }
-  if (!pattern) return;
-  const hasPermission = await chrome.permissions.contains({ origins: [pattern] });
-  if (!hasPermission) return;
+
+  // Register on every origin Chrome has granted (feed host, localhost from the manifest,
+  // optional *://*/*, and any sites the user added under extension → Site access).
+  // Jsonmaker’s “Import current toolbar” runs on the page you’re viewing; if that host
+  // differs from the feed URL host, we must still inject the postMessage bridge here.
+  const matches = new Set();
+  const { origins = [] } = await chrome.permissions.getAll();
+  for (const o of origins) {
+    if (typeof o === 'string' && o.trim()) {
+      matches.add(o.trim());
+    }
+  }
+  const feedPattern = originPatternFromUrl(feedUrl);
+  if (feedPattern && await chrome.permissions.contains({ origins: [feedPattern] })) {
+    matches.add(feedPattern);
+  }
+  if (matches.size === 0) {
+    return;
+  }
   try {
     await chrome.scripting.registerContentScripts([{
       id: CONTENT_SCRIPT_ID,
       js: CONTENT_SCRIPT_FILES,
-      matches: [pattern],
+      matches: [...matches],
       runAt: 'document_start'
     }]);
   } catch (e) {
     console.warn('Content script registration failed:', e.message);
   }
+}
+
+// Re-register when the user grants a new origin (e.g. Site access in chrome://extensions).
+if (chrome.permissions?.onAdded) {
+  chrome.permissions.onAdded.addListener(async () => {
+    const s = await getSettings();
+    await refreshContentScriptForFeed(s.feedUrl);
+  });
 }
 
 // ---- Lifecycle & events

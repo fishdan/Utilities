@@ -43,6 +43,12 @@
   </label>
   <div class="muted">Full sync removes any manual changes or extra items in the target folder.</div>
 
+  <p class="muted" style="margin-top:16px;">
+    <strong>Jsonmaker “Import current toolbar”:</strong> the extension injects a tiny bridge on sites it is allowed to run on.
+    When you save, we request access for both <code>example.com</code> and <code>www.example.com</code> when those are the usual pair, so either URL works.
+    If your feed is on another host than the Jsonmaker page (e.g. GitHub vs your blog), use <code>chrome://extensions</code> → <strong>Site access</strong> and allow that Jsonmaker site too (or “On all sites”).
+  </p>
+
   <div style="margin-top:16px; display:flex; gap:8px;">
     <button id="saveBtn">Save</button>
     <button id="syncBtn">Sync now</button>

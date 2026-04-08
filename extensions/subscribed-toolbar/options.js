@@ -19,6 +19,37 @@ async function load() {
   document.querySelector('input[name="syncMode"][value="full_sync"]').checked = !!cfg.destructiveSync;
 }
 
+/** Same registrable host often appears as apex and www; Jsonmaker pages may use either. */
+function feedOriginPatterns(parsed) {
+  const isHttp = parsed.protocol === 'http:';
+  const isHttps = parsed.protocol === 'https:';
+  const isLocalHost = ['localhost', '127.0.0.1', '[::1]'].includes(parsed.hostname);
+  if (!isHttp && !isHttps) {
+    return [];
+  }
+  if (isHttp && !isLocalHost) {
+    return [];
+  }
+  const { protocol, hostname, port } = parsed;
+  const hostPort = port ? `${hostname}:${port}` : hostname;
+  if (/^\d+\.\d+\.\d+\.\d+$/.test(hostname) || hostname.includes(':')) {
+    return [`${protocol}//${hostPort}/*`];
+  }
+  const patterns = new Set([`${protocol}//${hostPort}/*`]);
+  if (!isLocalHost) {
+    const portSuffix = port ? `:${port}` : '';
+    if (hostname.startsWith('www.') && hostname.length > 4) {
+      const apex = hostname.slice(4);
+      if (apex) {
+        patterns.add(`${protocol}//${apex}${portSuffix}/*`);
+      }
+    } else if (!hostname.startsWith('www.')) {
+      patterns.add(`${protocol}//www.${hostname}${portSuffix}/*`);
+    }
+  }
+  return [...patterns];
+}
+
 async function ensureFeedPermission(feedUrl) {
   let parsed;
   try {
@@ -41,12 +72,22 @@ async function ensureFeedPermission(feedUrl) {
   if (isHttp && !isLocalHost) {
     throw new Error('Non-local feeds must use https://');
   }
-  const originPattern = `${parsed.protocol}//${parsed.host}/*`;
-  const hasPermission = await chrome.permissions.contains({ origins: [originPattern] });
-  if (hasPermission) return;
-  const granted = await chrome.permissions.request({ origins: [originPattern] });
+  const originPatterns = feedOriginPatterns(parsed);
+  if (originPatterns.length === 0) {
+    return;
+  }
+  const contains = await Promise.all(
+    originPatterns.map((pattern) =>
+      chrome.permissions.contains({ origins: [pattern] }).then((ok) => ({ pattern, ok }))
+    )
+  );
+  const missing = contains.filter((r) => !r.ok).map((r) => r.pattern);
+  if (missing.length === 0) {
+    return;
+  }
+  const granted = await chrome.permissions.request({ origins: missing });
   if (!granted) {
-    throw new Error(`Access to ${parsed.origin} was not granted. Feed not saved.`);
+    throw new Error(`Access to ${parsed.origin} (and related hosts) was not granted. Feed not saved.`);
   }
 }
 
