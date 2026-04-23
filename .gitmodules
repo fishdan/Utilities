@@ -1,3 +1,6 @@
 [submodule ".repo_ai"]
 	path = .repo_ai
 	url = https://github.com/fishdan/repo-ai
+[submodule "plugins/webping"]
+	path = plugins/webping
+	url = git@github.com:fishdan-plugins/webping.git
